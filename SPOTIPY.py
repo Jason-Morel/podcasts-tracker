@@ -14,7 +14,7 @@ import sys
 # AUTHENTIFICATION 
 
 os.environ["SPOTIPY_CLIENT_ID"] = "e48f42372a074a25b7a0d25da48439d6" # ID DE NOTRE SPOTIFY DEVELOPPER
-os.environ["SPOTIPY_CLIENT_SECRET"] = "90eb460ff94847998926f6d380532f59" # SECRET DU SPOTIDU DEVELOPPER
+os.environ["SPOTIPY_CLIENT_SECRET"] = "90eb460ff94847998926f6d380532f59" # SECRET DU SPOTIfy DEVELOPPER
 
 username = "31aon4o2j7wikppjnfxfvpvptjtu?si=a9a987029b674187" # USERNAME DANS LE LIEN DE NOTRE COMPTE SPOTIFY
 scope = "user-library-read"
@@ -80,7 +80,7 @@ else:
     results = sp.categories(limit=10)
     categories = results['categories']['items']
     # ici la variable "results" est la réponse renvoyée par l'API Spotify quand on fait une demande pour récupérer les catégories.
-    # Le dictionnaire "results" contient pleins d'infos et nous on garde la clé "categories" et la sous-clé "items".
+    # Le dictionnaire "results" contient plein d'infos et nous on garde la clé "categories" et la sous-clé "items".
     # Le code stocke la liste des catégories dans la variable "categories".
 
     print("Quelle catégorie de podcast préférez-vous ?")
