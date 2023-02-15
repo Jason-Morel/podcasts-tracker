@@ -8,12 +8,12 @@ Created on Mon Feb 13 13:48:54 2023
 import os
 import spotipy
 import spotipy.util as util
-import sys
+
 
 # AUTHENTIFICATION 
 
 os.environ["SPOTIPY_CLIENT_ID"] = "e48f42372a074a25b7a0d25da48439d6" # ID DE NOTRE SPOTIFY DEVELOPPER
-os.environ["SPOTIPY_CLIENT_SECRET"] = "90eb460ff94847998926f6d380532f59" # SECRET DU SPOTIDU DEVELOPPER
+os.environ["SPOTIPY_CLIENT_SECRET"] = "90eb460ff94847998926f6d380532f59" # SECRET DU SPOTIFY DEVELOPPER
 
 username = "31aon4o2j7wikppjnfxfvpvptjtu?si=a9a987029b674187" # USERNAME DANS LE LIEN DE NOTRE COMPTE SPOTIFY
 scope = "user-library-read"
@@ -33,7 +33,6 @@ else:
     print("Can't get token for", username)
     
     
-
 # PREMIER TEST
 # code très redondant mais ce n'est qu'un premier jet
 
@@ -76,7 +75,7 @@ else:
         max_duration = 10**10
 
     # Demande de la catégorie souhaitée
-    results = sp.categories(limit=100)
+    results = sp.categories(limit=10)
     categories = results['categories']['items']
     # ici la variable "results" est la réponse renvoyée par l'API Spotify quand on fait une demande pour récupérer les catégories.
     # Le dictionnaire "results" contient pleins d'infos et nous on garde la clé "categories" et la sous-clé "items".
