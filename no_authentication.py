@@ -16,5 +16,5 @@ results = sp.search(q='weezer', limit=20)
 for idx, track in enumerate(results['tracks']['items']):
     print(idx, track['name'])
 
-#Identifier les différentes catégories de podcasts
-
+#Try to find 10 shows related to economy in French market
+shows = sp.search(q='économie', limit=10, type='show', market='FR')
