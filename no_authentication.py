@@ -26,3 +26,8 @@ for idx, show in enumerate(shows['shows']['items']):
 shows_history = sp.search(q='histoire', limit=10, type='show', market='FR')
 for idx, show in enumerate(shows_history['shows']['items']):
     print(show['publisher'], ':', show['name'], show['id'])
+
+#Try to find 10 episodes related to art in French market
+shows_art = sp.search(q='art', limit=10, type='episode', market='FR')
+for idx, episode in enumerate(shows_art['episodes']['items']):
+    print(episode['name'], episode['id'])
