@@ -39,3 +39,10 @@ shows_id = sp.show(show_id='2ZFDmgDS2Z6xccP51s1zFQ', market='FR')
 #Find episodes using show ID
 episode = sp.show_episodes(show_id='2ZFDmgDS2Z6xccP51s1zFQ', limit=50, market='FR')
 
+#Because people usually commute twice a day (home -> office AND office -> home): we could return episodes matching the duration selected by user AND episodes which are twice as long.
+#It would allow the user to listen half of the episode in the morning and the other half in the evening.
+
+#How can we approximate episodes duration if API limits the results to 50?
+#We could look at the distribution of episodes duration for a specific show.
+#Then we would recommend shows to user (instead of episodes).
+#It means our tool would not need to be used everyday. Instead, user could use our tool when they feel like discovering new shows which match a specific topic.
