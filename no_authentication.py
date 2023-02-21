@@ -13,31 +13,40 @@ from spotipy.oauth2 import SpotifyClientCredentials
 sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials(client_id="e48f42372a074a25b7a0d25da48439d6",
                                                            client_secret="90eb460ff94847998926f6d380532f59"))
 
-#Example - how to use search function
-results = sp.search(q='weezer', limit=20)
-for idx, track in enumerate(results['tracks']['items']):
-    print(idx, track['name'])
+#We need to figure out how to convert a user input into a regular expression.
 
-#Find 10 shows related to economy in French market
-shows = sp.search(q='économie', limit=10, type='show', market='FR')
-for idx, show in enumerate(shows['shows']['items']):
-    print(show['publisher'], ':', show['name'])
+#Find shows related to economy in French market
+shows_0 = sp.search(q='économie', limit=50, type='show', market='FR')
+for idx, show in enumerate(shows_0['shows']['items']):
+    print(show['publisher'], ':', show['name'], show['languages'], show['id'])
+
+#Find the next 50 shows related to economy in French market (if none of the first 50 episodes matches the expected duration)
+shows_50 = sp.search(q='économie', limit=50, offset=50, type='show', market='FR')
+for idx, show in enumerate(shows_50['shows']['items']):
+    print(show['publisher'], ':', show['name'], show['languages'], show['id'])
+#TO DO: add the results on top of the first dictionary instead of creating a new variable
+
+
+##Look at the distribution of the variable duration_ms for the set of episodes
+
+#1-Add a new key (called 'episodes') to the shows_0['shows']['items'][idx] dictionaries. It contains descriptions of the show's first 50 episodes.
+for idx, show in enumerate(shows_0['shows']['items']):
+    shows_0['shows']['items'][idx]['episodes'] = sp.show_episodes(show_id=shows_0['shows']['items'][idx]['id'], limit=50, market='FR')
+
+#2-Add a new key (called 'duration_ms') to the shows_0['shows']['items'][idx] dictionaries. It contains durations (in ms) of the show's first 50 episodes. 
+for idx, show in enumerate(shows_0['shows']['items']):
+    duration_ms = []
+    for i, episode in enumerate(shows_0['shows']['items'][idx]['episodes']['items']):
+        duration_ms.append(shows_0['shows']['items'][idx]['episodes']['items'][i]['duration_ms'])
+        shows_0['shows']['items'][idx]['durations_ms'] = duration_ms
     
-#Find 10 shows related to history in French market
-shows_history = sp.search(q='histoire', limit=10, type='show', market='FR')
-for idx, show in enumerate(shows_history['shows']['items']):
-    print(show['publisher'], ':', show['name'], show['id'])
+#3-Find min and max values of the duration_ms list
 
-#Find 10 episodes related to art in French market
-shows_art = sp.search(q='art', limit=10, type='episode', market='FR')
-for idx, episode in enumerate(shows_art['episodes']['items']):
-    print(episode['name'], episode['id'])
+
     
-#Find a show using it's ID
-shows_id = sp.show(show_id='2ZFDmgDS2Z6xccP51s1zFQ', market='FR')
 
-#Find episodes using show ID
-episode = sp.show_episodes(show_id='2ZFDmgDS2Z6xccP51s1zFQ', limit=50, market='FR')
+
+
 
 #Because people usually commute twice a day (home -> office AND office -> home): we could return episodes matching the duration selected by user AND episodes which are twice as long.
 #It would allow the user to listen half of the episode in the morning and the other half in the evening.
