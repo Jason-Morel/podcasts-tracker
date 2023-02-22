@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Wed Feb 22 09:59:41 2023
+Created on Wed Feb 22 16:41:17 2023
 
 @author: lyna
 """
+
 
 import spotipy # la librairie pour manipuler l'api spotify
 import spotipy.util as util
@@ -29,7 +30,7 @@ if token:
 
 
 # fonction pour envoyer un message à Telegram
-def send_telegram_message(message):
+def send_telegram_message(message): # demander à Jason pour fonction propre
     url = f"https://api.telegram.org/bot{TOKEN_telegram}/sendMessage?chat_id={chat_id}&text={message}"
     response = requests.get(url)
     
@@ -37,8 +38,7 @@ def send_telegram_message(message):
     # Demande du temps d'écoute souhaité
     
 # envoyer les messages à Telegram
-message = "Quel est le temps d'écoute que vous souhaitez ?\n\n1. Moins de 5 minutes\n2. De 5 à 10 minutes\n3. De 10 à 15 minutes\n4. De 15 à 20 minutes\n5. De 20 à 30 minutes\n6. De 30 à 45 minutes\n7. De 45 minutes à 1 heure\n8. Plus d'une heure"
-send_telegram_message(message)
+send_telegram_message("Quel est le temps d'écoute que vous souhaitez ?\n\n1. Moins de 5 minutes\n2. De 5 à 10 minutes\n3. De 10 à 15 minutes\n4. De 15 à 20 minutes\n5. De 20 à 30 minutes\n6. De 30 à 45 minutes\n7. De 45 minutes à 1 heure\n8. Plus d'une heure")
 
 # demander à l'utilisateur de saisir leur choix via Telegram
 send_telegram_message("Entrez le numéro correspondant à votre choix : ")
@@ -53,9 +53,8 @@ text = result["message"]["text"]
 time_choice = int(text)
 
 # envoyer le temps d'écoute choisi à votre bot
-message = f"Réponse choisie : {time_choice}"
-url = f"https://api.telegram.org/bot{TOKEN_telegram}/sendMessage?chat_id={chat_id}&text={message}"
-requests.get(url)
+send_telegram_message(f"Réponse choisie : {time_choice}")
+
 
 
 if time_choice == 1:
