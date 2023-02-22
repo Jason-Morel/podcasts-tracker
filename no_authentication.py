@@ -7,6 +7,7 @@ Created on Wed Feb 15 15:45:28 2023
 
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
+import pandas as pd
 
 #Authentication - without user
 ##We need to figure out how to secure the authentication! (keep id and secret in a different file and add a .gitignore)
@@ -29,11 +30,11 @@ for idx, show in enumerate(shows_50['shows']['items']):
 
 ##Look at the distribution of the variable duration_ms for the set of episodes
 
-#1-Add a new key (called 'episodes') to the shows_0['shows']['items'][idx] dictionaries. It contains descriptions of the show's first 50 episodes.
+#1-Add a new key (called 'episodes') to the shows_0['shows']['items'][idx] dictionaries. It's a dictionary which contains descriptions of the show's first 50 episodes.
 for idx, show in enumerate(shows_0['shows']['items']):
     shows_0['shows']['items'][idx]['episodes'] = sp.show_episodes(show_id=shows_0['shows']['items'][idx]['id'], limit=50, market='FR')
 
-#2-Add a new key (called 'duration_ms') to the shows_0['shows']['items'][idx] dictionaries. It contains durations (in ms) of the show's first 50 episodes. 
+#2-Add a new key (called 'duration_ms') to the shows_0['shows']['items'][idx] dictionaries. It's a list which contains durations (in ms) of the show's first 50 episodes. 
 for idx, show in enumerate(shows_0['shows']['items']):
     duration_ms = []
     for i, episode in enumerate(shows_0['shows']['items'][idx]['episodes']['items']):
@@ -41,9 +42,18 @@ for idx, show in enumerate(shows_0['shows']['items']):
         shows_0['shows']['items'][idx]['durations_ms'] = duration_ms
     
 #3-Find min and max values of the duration_ms list
+#3.1-Convert lists into Pandas DataFrames
+for idx, show in enumerate(shows_0['shows']['items']):
+    shows_0['shows']['items'][idx]['durations_ms'] = pd.DataFrame({'duration_ms':shows_0['shows']['items'][idx]['durations_ms']})
+#Add a new key (called 'min_max') to the shows_0['shows']['items'][idx] dictionaries. It's a dictionary which contains the min (10th percentile) and max (90th percentile) of the show's first 50 episodes. 
+for idx, show in enumerate(shows_0['shows']['items']):
+    durations_ms = shows_0['shows']['items'][idx]['durations_ms']
+    shows_0['shows']['items'][idx]['min_max'] = {'min':round(int(durations_ms.quantile(q=0.1))/60000,2), 'max':round(int(durations_ms.quantile(q=0.9))/60000,2)} #min and max are converted to minutes
 
+#To have an idea of the intervals we can expect with this method:
+for idx, show in enumerate(shows_0['shows']['items']):
+    print(shows_0['shows']['items'][idx]['min_max'])
 
-    
 
 
 
