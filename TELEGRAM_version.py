@@ -82,3 +82,4 @@ elif time_choice == 7:
 elif time_choice == 8:
    min_duration = 3600
    max_duration = 10**10
+   
