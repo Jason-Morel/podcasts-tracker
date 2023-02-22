@@ -64,6 +64,8 @@ elif time_choice == 8:
    min_duration = 3600
    max_duration = 10**10
 
+
+
     # Demande de la catégorie souhaitée
 results = sp.categories(limit=10)
 categories = results['categories']['items']
