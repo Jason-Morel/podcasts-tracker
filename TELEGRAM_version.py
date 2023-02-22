@@ -6,21 +6,13 @@ Created on Wed Feb 22 09:59:41 2023
 @author: lyna
 """
 
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Feb 20 12:12:01 2023
-
-@author: lyna
-"""
-
 import spotipy    # la librairie pour manipuler l'api spotify
 import spotipy.util as util
 import requests
 
 # Infos de mon telegram :
-TOKEN = "6179108053:AAFXqqyrlrLvN_tlSARu2_l3TLXkA_EjXTc"
-chat_id = "5561504638"
+TOKEN_telegram = "6179108053:AAFXqqyrlrLvN_tlSARu2_l3TLXkA_EjXTc" #obtenu en créant notre bot avec le compte telegram BotFather
+chat_id = "5561504638" #obtenu en allant sur https://api.telegram.org/bot{TOKEN_telegram}/getUpdates
 
 # AUTHENTIFICATION spotipy
 username="31aon4o2j7wikppjnfxfvpvptjtu?si=442993df78a74794"
@@ -38,7 +30,7 @@ if token:
 
 # fonction pour envoyer un message à Telegram
 def send_telegram_message(message):
-    url = f"https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={message}"
+    url = f"https://api.telegram.org/bot{TOKEN_telegram}/sendMessage?chat_id={chat_id}&text={message}"
     response = requests.get(url)
     
 
@@ -51,16 +43,18 @@ send_telegram_message(message)
 # demander à l'utilisateur de saisir leur choix via Telegram
 send_telegram_message("Entrez le numéro correspondant à votre choix : ")
 
+# RE RUN À PARTIR D'ICI
+
 # récupérer la réponse de l'utilisateur
-response = requests.get(f"https://api.telegram.org/bot{TOKEN}/getUpdates")
+response = requests.get(f"https://api.telegram.org/bot{TOKEN_telegram}/getUpdates")
 data = response.json()
 result = data["result"][-1]
 text = result["message"]["text"]
 time_choice = int(text)
 
 # envoyer le temps d'écoute choisi à votre bot
-message = f"Temps d'écoute choisi : {time_choice}"
-url = f"https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={message}"
+message = f"Réponse choisie : {time_choice}"
+url = f"https://api.telegram.org/bot{TOKEN_telegram}/sendMessage?chat_id={chat_id}&text={message}"
 requests.get(url)
 
 
