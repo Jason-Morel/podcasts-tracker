@@ -6,12 +6,12 @@ Created on Wed Feb 22 09:59:41 2023
 @author: lyna
 """
 
-import spotipy    # la librairie pour manipuler l'api spotify
+import spotipy # la librairie pour manipuler l'api spotify
 import spotipy.util as util
 import requests
 
 # Infos de mon telegram :
-TOKEN_telegram = "6179108053:AAFXqqyrlrLvN_tlSARu2_l3TLXkA_EjXTc" #obtenu en créant notre bot avec le compte telegram BotFather
+TOKEN_telegram = "6179108053:AAFXqqyrlrLvN_tlSARu2_l3TLXkA_EjXTc" # obtenu en créant notre bot avec le telegram BotFather
 chat_id = "5561504638" #obtenu en allant sur https://api.telegram.org/bot{TOKEN_telegram}/getUpdates
 
 # AUTHENTIFICATION spotipy
