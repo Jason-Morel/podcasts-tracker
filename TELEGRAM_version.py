@@ -46,13 +46,13 @@ send_telegram_message("Entrez le numéro correspondant à votre choix : ")
 # RE RUN À PARTIR D'ICI
 
 # récupérer la réponse de l'utilisateur
-response = requests.get(f"https://api.telegram.org/bot{TOKEN_telegram}/getUpdates")
+response = requests.get(f"https://api.telegram.org/bot{TOKEN_telegram}/getUpdates") #Demander à Jason pour fonction
 data = response.json()
 result = data["result"][-1]
 text = result["message"]["text"]
 time_choice = int(text)
 
-# envoyer le temps d'écoute choisi à votre bot
+# envoyer le temps d'écoute choisi depuis votre bot
 send_telegram_message(f"Réponse choisie : {time_choice}")
 
 if time_choice == 1:
@@ -80,3 +80,17 @@ elif time_choice == 8:
    min_duration = 3600
    max_duration = 10**10
    
+# Demande de mot clé à l'utilisateur
+send_telegram_message("Quel type de podcast souhaitez-vous écouter aujourd'hui ?\nEntrez le thème de votre choix : ")
+   
+# Récupérer le mot exact entré sur Telegram
+response = requests.get(f"https://api.telegram.org/bot{TOKEN_telegram}/getUpdates")
+data = response.json()
+result = data["result"][-1]
+text = result["message"]["text"]
+search_word = str(text)
+
+# Implémentation du mot exact dans la fonction search
+query = f'^{search_word}$' # un peu perplexe
+test1 = sp.search(q=query, limit=50, type='show', market='FR')
+
