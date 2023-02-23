@@ -47,7 +47,7 @@ send_telegram_message("Entrez le numéro correspondant à votre choix : ")
 # RE RUN À PARTIR D'ICI
 
 # récupérer la réponse de l'utilisateur
-response = requests.get(f"https://api.telegram.org/bot{TOKEN_telegram}/getUpdates") #Demander à Jason pour fonction
+response = requests.get(f"https://api.telegram.org/bot{TOKEN_telegram}/getUpdates") 
 data = response.json()
 result = data["result"][-1]
 text = result["message"]["text"]
@@ -93,6 +93,19 @@ search_word = str(text)
 search_word = re.sub(r' ', '', search_word)
 
 # Implémentation du mot exact dans la fonction search
-query = f'^{search_word}$' # un peu perplexe
-test1 = sp.search(q=query, limit=50, type='show', market='FR')
+query = f'^{search_word}$' 
+test1 = sp.search(q=query, limit=50, type='episode', market='FR')
 
+# Filtrer les épisodes selon la durée et le thème choisi
+selected_episodes = 0 # ??????
+
+# Afficher les épisodes sélectionnés
+messagefinal = "Voici les épisodes que nous vous proposons :\n"
+for episode in selected_episodes:
+    name = episode['name']
+    description = episode['description']
+    duration = episode['duration_ms'] / 60000
+    messagefinal += f"\nTitre : {name}\nDescription : {description}\nDurée : {duration:.2f} minutes\nLien : qqchose"
+
+# Envoyer les épisodes sélectionnés à Telegram
+send_telegram_message(messagefinal)
