@@ -1,16 +1,15 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Wed Feb 22 16:41:17 2023
+Created on Thu Feb 23 17:56:49 2023
 
-@author: lyna
+@author: Jason
 """
-
 
 import spotipy # la librairie pour manipuler l'api spotify
 import spotipy.util as util
 import requests
 import re
+import pandas as pd
 
 # Infos de mon telegram :
 TOKEN_telegram = "6179108053:AAFXqqyrlrLvN_tlSARu2_l3TLXkA_EjXTc" # obtenu en créant notre bot avec le telegram BotFather
@@ -96,3 +95,42 @@ search_word = re.sub(r' ', '', search_word)
 query = f'^{search_word}$' # un peu perplexe
 test1 = sp.search(q=query, limit=50, type='show', market='FR')
 
+
+
+#Find shows related to economy in French market
+shows_0 = sp.search(q='économie', limit=50, type='show', market='FR')
+for idx, show in enumerate(shows_0['shows']['items']):
+    print(show['publisher'], ':', show['name'], show['languages'], show['id'])
+
+#Find the next 50 shows related to economy in French market (if none of the first 50 episodes matches the expected duration)
+shows_50 = sp.search(q='économie', limit=50, offset=50, type='show', market='FR')
+for idx, show in enumerate(shows_50['shows']['items']):
+    print(show['publisher'], ':', show['name'], show['languages'], show['id'])
+#TO DO: add the results on top of the first dictionary instead of creating a new variable
+
+
+##Look at the distribution of the variable duration_ms for the set of episodes
+
+#1-Add a new key (called 'episodes') to the shows_0['shows']['items'][idx] dictionaries. It's a dictionary which contains descriptions of the show's first 50 episodes.
+for idx, show in enumerate(shows_0['shows']['items']):
+    shows_0['shows']['items'][idx]['episodes'] = sp.show_episodes(show_id=shows_0['shows']['items'][idx]['id'], limit=50, market='FR')
+
+#2-Add a new key (called 'duration_ms') to the shows_0['shows']['items'][idx] dictionaries. It's a list which contains durations (in ms) of the show's first 50 episodes. 
+for idx, show in enumerate(shows_0['shows']['items']):
+    duration_ms = []
+    for i, episode in enumerate(shows_0['shows']['items'][idx]['episodes']['items']):
+        duration_ms.append(shows_0['shows']['items'][idx]['episodes']['items'][i]['duration_ms'])
+        shows_0['shows']['items'][idx]['durations_ms'] = duration_ms
+    
+#3-Find min and max values of the duration_ms list
+#3.1-Convert lists into Pandas DataFrames
+for idx, show in enumerate(shows_0['shows']['items']):
+    shows_0['shows']['items'][idx]['durations_ms'] = pd.DataFrame({'duration_ms':shows_0['shows']['items'][idx]['durations_ms']})
+#Add a new key (called 'min_max') to the shows_0['shows']['items'][idx] dictionaries. It's a dictionary which contains the min (10th percentile) and max (90th percentile) of the show's first 50 episodes. 
+for idx, show in enumerate(shows_0['shows']['items']):
+    durations_ms = shows_0['shows']['items'][idx]['durations_ms']
+    shows_0['shows']['items'][idx]['min_max'] = {'min':round(int(durations_ms.quantile(q=0.1))/60000,2), 'max':round(int(durations_ms.quantile(q=0.9))/60000,2)} #min and max are converted to minutes
+
+#To have an idea of the intervals we can expect with this method:
+for idx, show in enumerate(shows_0['shows']['items']):
+    print(shows_0['shows']['items'][idx]['min_max'])

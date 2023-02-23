@@ -25,7 +25,9 @@ for idx, show in enumerate(shows_0['shows']['items']):
 shows_50 = sp.search(q='économie', limit=50, offset=50, type='show', market='FR')
 for idx, show in enumerate(shows_50['shows']['items']):
     print(show['publisher'], ':', show['name'], show['languages'], show['id'])
-#TO DO: add the results on top of the first dictionary instead of creating a new variable
+#TO DO: 
+    #remove shows which are not french or english (advanced: allow user to select languages)
+    #add the results on top of the first dictionary instead of creating a new variable
 
 
 ##Look at the distribution of the variable duration_ms for the set of episodes
@@ -53,6 +55,16 @@ for idx, show in enumerate(shows_0['shows']['items']):
 #To have an idea of the intervals we can expect with this method:
 for idx, show in enumerate(shows_0['shows']['items']):
     print(shows_0['shows']['items'][idx]['min_max'])
+    
+#Drop shows for which episode duration is not regular enough    
+for idx, show in enumerate(shows_0['shows']['items']):
+    if shows_0['shows']['items'][idx]['min_max']['min']<45:
+        if shows_0['shows']['items'][idx]['min_max']['max']-shows_0['shows']['items'][idx]['min_max']['min']>15:
+            print(shows_0['shows']['items'][idx]['min_max'])
+            #del shows_0['shows']['items'][idx]
+
+
+
 
 
 
