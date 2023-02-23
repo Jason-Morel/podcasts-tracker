@@ -55,8 +55,6 @@ time_choice = int(text)
 # envoyer le temps d'écoute choisi à votre bot
 send_telegram_message(f"Réponse choisie : {time_choice}")
 
-
-
 if time_choice == 1:
    min_duration = 0
    max_duration = 300
