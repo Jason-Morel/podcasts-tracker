@@ -98,7 +98,7 @@ selected_episodes = [episode for episode in test1['episodes']['items'] if min_du
 
 # Récupérer davantage d'épisodes
 offset = 50
-while len(selected_episodes) < 2 and offset < test1['episodes']['total']:
+while len(selected_episodes) < 3 and offset < test1['episodes']['total']:
     results = sp.search(q=query, limit=50, type='episode', market='FR', offset=offset)
     episodes = results['episodes']['items']
     selected_episodes += [episode for episode in episodes if min_duration <= episode['duration_ms'] <= max_duration and episode['language'] == 'fr']
