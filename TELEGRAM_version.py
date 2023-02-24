@@ -116,3 +116,4 @@ send_telegram_message(messagefinal)
 # Changer la langue en fonction de la préférence de l'utilisateur
 # Faire en sorte que cela fonctionne si le thème contient plusieurs mots
 # Automatiser entièrement le bot telegram 
+# Pourquoi ça fonctionne pas avec économie ????
