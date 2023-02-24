@@ -6,6 +6,7 @@ Created on Wed Feb 22 16:41:17 2023
 @author: lyna
 """
 
+# S'assurer d'avoir fait "%reset" dans la console au début
 
 import spotipy # la librairie pour manipuler l'api spotify
 import spotipy.util as util
@@ -111,10 +112,8 @@ while len(selected_episodes) < 3 and offset < test1['episodes']['total']:
 send_telegram_message(messagefinal)
 
 
-# Changer la langue en fonction de la préférence de l'utilisateur
+# Changer la langue en fonction de la préférence de l'utilisateur si besoin
 # Faire en sorte que cela fonctionne si le thème contient plusieurs mots
 # Automatiser entièrement le bot telegram 
-# Pourquoi ça fonctionne pas avec économie ?????
+# Régler les cas économie et fatigue 
 # Enlever le lien moche en bas si possible
-# faire 2 fois de suite ça bug, clean environment
-# Fatigue ????
