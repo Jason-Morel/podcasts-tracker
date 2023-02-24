@@ -39,7 +39,7 @@ def send_telegram_message(message): # demander à Jason pour fonction propre
     # Demande du temps d'écoute souhaité
     
 # envoyer les messages à Telegram
-send_telegram_message("Quel est le temps d'écoute que vous souhaitez ?\n\n1. Moins de 5 minutes\n2. De 5 à 10 minutes\n3. De 10 à 15 minutes\n4. De 15 à 20 minutes\n5. De 20 à 30 minutes\n6. De 30 à 45 minutes\n7. De 45 minutes à 1 heure\n8. Plus d'une heure")
+send_telegram_message("Quel est le temps d'écoute que vous souhaitez ?\n\n1. Moins de 10 minutes\n2. De 10 à 20 minutes\n3. De 20 à 30 minutes\n4. De 30 à 40 minutes\n5. De 40 à 50 minutes\n6. De 50 minutes à 1 heure\n7. Plus d'une heure")
 
 # demander à l'utilisateur de saisir leur choix via Telegram
 send_telegram_message("Entrez le numéro correspondant à votre choix : ")
@@ -58,28 +58,25 @@ send_telegram_message(f"Réponse choisie : {time_choice}")
 
 if time_choice == 1:
    min_duration = 0
-   max_duration = 300
+   max_duration = 600000
 elif time_choice == 2:
-   min_duration = 300
-   max_duration = 600
+   min_duration = 600000
+   max_duration = 1200000
 elif time_choice == 3:
-   min_duration = 600
-   max_duration = 900
+   min_duration = 1200000
+   max_duration = 1800000
 elif time_choice == 4:
-   min_duration = 900
-   max_duration = 1200
+   min_duration = 1800000
+   max_duration = 2400000
 elif time_choice == 5:
-   min_duration = 1200
-   max_duration = 1800
+   min_duration = 2400000
+   max_duration = 3000000
 elif time_choice == 6:
-   min_duration = 1800
-   max_duration = 2700
+   min_duration = 3000000
+   max_duration = 3600000
 elif time_choice == 7:
-   min_duration = 2700
-   max_duration = 3600
-elif time_choice == 8:
-   min_duration = 3600
-   max_duration = 10**10
+   min_duration = 3600000
+   max_duration = 10**1000
    
 # Demande de mot clé à l'utilisateur
 send_telegram_message("Quel type de podcast souhaitez-vous écouter aujourd'hui ?\nEntrez le thème de votre choix : ")
@@ -93,19 +90,29 @@ search_word = str(text)
 search_word = re.sub(r' ', '', search_word)
 
 # Implémentation du mot exact dans la fonction search
-query = f'^{search_word}$' 
+query = f'{search_word}' 
 test1 = sp.search(q=query, limit=50, type='episode', market='FR')
 
-# Filtrer les épisodes selon la durée et le thème choisi
-selected_episodes = 0 # ??????
 
-# Afficher les épisodes sélectionnés
-messagefinal = "Voici les épisodes que nous vous proposons :\n"
-for episode in selected_episodes:
-    name = episode['name']
-    description = episode['description']
-    duration = episode['duration_ms'] / 60000
-    messagefinal += f"\nTitre : {name}\nDescription : {description}\nDurée : {duration:.2f} minutes\nLien : qqchose"
+# Filtrer les épisodes selon la durée
+selected_episodes = [episode for episode in test1['episodes']['items'] if min_duration <= episode['duration_ms'] <= max_duration and episode['language'] == 'fr']
+# ceux dans test1 dont duration_ms est comprise entre min_duration et max_duration
 
-# Envoyer les épisodes sélectionnés à Telegram
+# Récupérer davantage d'épisodes
+offset = 50
+while len(selected_episodes) < 2 and offset < test1['episodes']['total']:
+    results = sp.search(q=query, limit=50, type='episode', market='FR', offset=offset)
+    episodes = results['episodes']['items']
+    selected_episodes += [episode for episode in episodes if min_duration <= episode['duration_ms'] <= max_duration and episode['language'] == 'fr']
+    offset += 50
+    
+# Envoi des épisodes sélectionnés à Telegram
+    messagefinal = "Voici une liste de plusieurs épisodes correspondant à votre recherche :\n\n"
+    for episode in selected_episodes:
+        messagefinal += f"{episode['name']}\n{episode['external_urls']['spotify']}\n\n"
 send_telegram_message(messagefinal)
+
+
+# Changer la langue en fonction de la préférence de l'utilisateur
+# Faire en sorte que cela fonctionne si le thème contient plusieurs mots
+# Automatiser entièrement le bot telegram 
