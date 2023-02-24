@@ -116,3 +116,4 @@ send_telegram_message(messagefinal)
 # Automatiser entièrement le bot telegram 
 # Pourquoi ça fonctionne pas avec économie ?????
 # Enlever le lien moche en bas si possible
+# faire 2 fois de suite ça bug
