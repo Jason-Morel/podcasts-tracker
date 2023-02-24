@@ -8,6 +8,8 @@ Created on Wed Feb 15 15:45:28 2023
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 import pandas as pd
+import re
+from colorama import Fore, Back, Style
 
 #Authentication - without user
 ##We need to figure out how to secure the authentication! (keep id and secret in a different file and add a .gitignore)
@@ -25,13 +27,20 @@ for idx, show in enumerate(shows_0['shows']['items']):
 shows_50 = sp.search(q='économie', limit=50, offset=50, type='show', market='FR')
 for idx, show in enumerate(shows_50['shows']['items']):
     print(show['publisher'], ':', show['name'], show['languages'], show['id'])
-#TO DO: 
-    #remove shows which are not french or english (advanced: allow user to select languages)
+
+###TO DO: 
     #add the results on top of the first dictionary instead of creating a new variable
 
 
-##Look at the distribution of the variable duration_ms for the set of episodes
+##Remove shows which are not french or english (LYNA: allow user to select languages)
+languages = 'fr|en'
+for idx, show in enumerate(shows_0['shows']['items']):
+    shows_0['shows']['items'][idx]['languages'] = str(shows_0['shows']['items'][idx]['languages']).lower()
+    if re.search(languages, shows_0['shows']['items'][idx]['languages']) == None:
+        #print( shows_0['shows']['items'][idx]['name'],  shows_0['shows']['items'][idx]['languages'])
+        del shows_0['shows']['items'][idx]
 
+##Look at the distribution of the variable duration_ms for the set of episodes
 #1-Add a new key (called 'episodes') to the shows_0['shows']['items'][idx] dictionaries. It's a dictionary which contains descriptions of the show's first 50 episodes.
 for idx, show in enumerate(shows_0['shows']['items']):
     shows_0['shows']['items'][idx]['episodes'] = sp.show_episodes(show_id=shows_0['shows']['items'][idx]['id'], limit=50, market='FR')
@@ -60,14 +69,59 @@ for idx, show in enumerate(shows_0['shows']['items']):
 for idx, show in enumerate(shows_0['shows']['items']):
     if shows_0['shows']['items'][idx]['min_max']['min']<45:
         if shows_0['shows']['items'][idx]['min_max']['max']-shows_0['shows']['items'][idx]['min_max']['min']>15:
-            print(shows_0['shows']['items'][idx]['min_max'])
-            #del shows_0['shows']['items'][idx]
+            #print(shows_0['shows']['items'][idx]['min_max'])
+            del shows_0['shows']['items'][idx]
+
+##Assign a duration span to each show
+#Round min and max to get clean duration spans
+for idx, show in enumerate(shows_0['shows']['items']):
+    if shows_0['shows']['items'][idx]['min_max']['min']>5:
+        shows_0['shows']['items'][idx]['min_max']['min'] = int(round(shows_0['shows']['items'][idx]['min_max']['min'] - shows_0['shows']['items'][idx]['min_max']['min']%5, 0))
+        shows_0['shows']['items'][idx]['min_max']['max'] = int(round(shows_0['shows']['items'][idx]['min_max']['max'] - (shows_0['shows']['items'][idx]['min_max']['max']%5), 0))
+
+for idx, show in enumerate(shows_0['shows']['items']):
+    if shows_0['shows']['items'][idx]['min_max']['min']<5 and shows_0['shows']['items'][idx]['min_max']['max']<6:
+        shows_0['shows']['items'][idx]['min_max']['min'] = 0
+        shows_0['shows']['items'][idx]['min_max']['max'] = 5
+
+for idx, show in enumerate(shows_0['shows']['items']):
+    if shows_0['shows']['items'][idx]['min_max']['min']<5 and shows_0['shows']['items'][idx]['min_max']['max']>6:
+        shows_0['shows']['items'][idx]['min_max']['min'] = 5
+        shows_0['shows']['items'][idx]['min_max']['max'] = int(round(shows_0['shows']['items'][idx]['min_max']['max'] + 5-(shows_0['shows']['items'][idx]['min_max']['max']%5), 0))
+        
+#Create uniform duration spans
+for idx, show in enumerate(shows_0['shows']['items']):
+    if shows_0['shows']['items'][idx]['min_max']['min'] == 0 and shows_0['shows']['items'][idx]['min_max']['max'] == 5:
+        shows_0['shows']['items'][idx]['duration_span'] = 'under 5'
+    if 5 <= shows_0['shows']['items'][idx]['min_max']['min'] <= 15 and 5 <= shows_0['shows']['items'][idx]['min_max']['max'] <= 15:
+        shows_0['shows']['items'][idx]['duration_span'] = '5 to 15'
+    if 5 <= shows_0['shows']['items'][idx]['min_max']['min'] <= 15 and 15 <= shows_0['shows']['items'][idx]['min_max']['max'] <= 30:
+        shows_0['shows']['items'][idx]['duration_span'] = '15 to 30'
+    if 15 <= shows_0['shows']['items'][idx]['min_max']['min'] <= 30 and 15 <= shows_0['shows']['items'][idx]['min_max']['max'] <= 30:
+        shows_0['shows']['items'][idx]['duration_span'] = '15 to 30'
+    if 15 <= shows_0['shows']['items'][idx]['min_max']['min'] <= 30 and 30 <= shows_0['shows']['items'][idx]['min_max']['max'] <= 45:
+        shows_0['shows']['items'][idx]['duration_span'] = '30 to 45'
+    if 30 <= shows_0['shows']['items'][idx]['min_max']['min'] <= 45 and 30 <= shows_0['shows']['items'][idx]['min_max']['max'] <= 45:
+        shows_0['shows']['items'][idx]['duration_span'] = '30 to 45'
+    if 30 <= shows_0['shows']['items'][idx]['min_max']['min'] <= 45 and 45 <= shows_0['shows']['items'][idx]['min_max']['max']:
+        shows_0['shows']['items'][idx]['duration_span'] = 'over 45'
+    if 45 <= shows_0['shows']['items'][idx]['min_max']['min']:
+        shows_0['shows']['items'][idx]['duration_span'] = 'over 45'
+
+#Check that all every shows are assigned to a span
+for idx, show in enumerate(shows_0['shows']['items']):
+    try:
+        print(Fore.GREEN+ shows_0['shows']['items'][idx]['name'], shows_0['shows']['items'][idx]['duration_span'])
+    except KeyError:
+        print(Fore.RED + 'span does not exist')
+        
+##Filter shows by duration
+for idx, show in enumerate(shows_0['shows']['items']):
+    if shows_0['shows']['items'][idx]['duration_span'] == '5 to 15':
+        print(Fore.CYAN + show['name'], Fore.MAGENTA + show['duration_span'])
 
 
-
-
-
-
+        
 
 
 #Because people usually commute twice a day (home -> office AND office -> home): we could return episodes matching the duration selected by user AND episodes which are twice as long.
