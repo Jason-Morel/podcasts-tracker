@@ -115,3 +115,4 @@ send_telegram_message(messagefinal)
 # Faire en sorte que cela fonctionne si le thème contient plusieurs mots
 # Automatiser entièrement le bot telegram 
 # Pourquoi ça fonctionne pas avec économie ?????
+# Enlever le lien moche en bas si possible
