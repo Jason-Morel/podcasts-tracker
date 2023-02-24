@@ -93,10 +93,8 @@ search_word = re.sub(r' ', '', search_word)
 query = f'{search_word}' 
 test1 = sp.search(q=query, limit=50, type='episode', market='FR')
 
-
 # Filtrer les épisodes selon la durée
 selected_episodes = [episode for episode in test1['episodes']['items'] if min_duration <= episode['duration_ms'] <= max_duration and episode['language'] == 'fr']
-# ceux dans test1 dont duration_ms est comprise entre min_duration et max_duration
 
 # Récupérer davantage d'épisodes
 offset = 50
@@ -116,4 +114,4 @@ send_telegram_message(messagefinal)
 # Changer la langue en fonction de la préférence de l'utilisateur
 # Faire en sorte que cela fonctionne si le thème contient plusieurs mots
 # Automatiser entièrement le bot telegram 
-# Pourquoi ça fonctionne pas avec économie ????
+# Pourquoi ça fonctionne pas avec économie ?????
