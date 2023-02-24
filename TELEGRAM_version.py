@@ -105,7 +105,7 @@ while len(selected_episodes) < 3 and offset < test1['episodes']['total']:
     offset += 50
     
 # Envoi des épisodes sélectionnés à Telegram
-    messagefinal = "Voici une liste de plusieurs épisodes correspondant à votre recherche :\n\n"
+    messagefinal = "Voici une liste de plusieurs podcasts correspondant à votre recherche :\n\n"
     for episode in selected_episodes:
         messagefinal += f"{episode['name']}\n{episode['external_urls']['spotify']}\n\n"
 send_telegram_message(messagefinal)
