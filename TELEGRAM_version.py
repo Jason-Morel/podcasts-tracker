@@ -12,17 +12,20 @@ import spotipy # la librairie pour manipuler l'api spotify
 import spotipy.util as util
 import requests
 import re
+from secret import *
 
-# Infos de mon telegram :
-TOKEN_telegram = "6179108053:AAFXqqyrlrLvN_tlSARu2_l3TLXkA_EjXTc" # obtenu en créant notre bot avec le telegram BotFather
-chat_id = "5561504638" #obtenu en allant sur https://api.telegram.org/bot{TOKEN_telegram}/getUpdates
+# Infos du telegram podcast_tracker_bot :
+TOKEN_telegram1 = TOKEN_telegram1
+chat_id = chat_id
+    
+# Infos du telegram show_finder_bot :
+TOKEN_telegram2 = TOKEN_telegram2
 
-# AUTHENTIFICATION spotipy
-username="31aon4o2j7wikppjnfxfvpvptjtu?si=442993df78a74794"
-clientId= "e48f42372a074a25b7a0d25da48439d6"
-clientSecret="90eb460ff94847998926f6d380532f59"
- 
-scope = 'playlist-modify-public'
+# Authentification spotipy
+username = username
+clientId = clientId
+clientSecret = clientSecret
+scope = scope
 
 token = util.prompt_for_user_token(username,scope,client_id=clientId,client_secret=clientSecret,redirect_uri='https://github.com/Jason-Morel/podcasts-tracker')
 
@@ -33,7 +36,7 @@ if token:
 
 # fonction pour envoyer un message à Telegram
 def send_telegram_message(message): # demander à Jason pour fonction propre
-    url = f"https://api.telegram.org/bot{TOKEN_telegram}/sendMessage?chat_id={chat_id}&text={message}"
+    url = f"https://api.telegram.org/bot{TOKEN_telegram1}/sendMessage?chat_id={chat_id}&text={message}"
     response = requests.get(url)
     
 
@@ -48,7 +51,7 @@ send_telegram_message("Entrez le numéro correspondant à votre choix : ")
 # RE RUN À PARTIR D'ICI
 
 # récupérer la réponse de l'utilisateur
-response = requests.get(f"https://api.telegram.org/bot{TOKEN_telegram}/getUpdates") 
+response = requests.get(f"https://api.telegram.org/bot{TOKEN_telegram1}/getUpdates") 
 data = response.json()
 result = data["result"][-1]
 text = result["message"]["text"]
@@ -83,7 +86,7 @@ elif time_choice == 7:
 send_telegram_message("Quel type de podcast souhaitez-vous écouter aujourd'hui ?\nEntrez le thème de votre choix : ")
    
 # Récupérer le mot exact entré sur Telegram
-response = requests.get(f"https://api.telegram.org/bot{TOKEN_telegram}/getUpdates")
+response = requests.get(f"https://api.telegram.org/bot{TOKEN_telegram1}/getUpdates")
 data = response.json()
 result = data["result"][-1]
 text = result["message"]["text"]
@@ -105,15 +108,17 @@ while len(selected_episodes) < 3 and offset < test1['episodes']['total']:
     selected_episodes += [episode for episode in episodes if min_duration <= episode['duration_ms'] <= max_duration and episode['language'] == 'fr']
     offset += 50
     
+    
+# RE RUN ICI  
 # Envoi des épisodes sélectionnés à Telegram
+if len(selected_episodes) >= 3:
     messagefinal = "Voici une liste de plusieurs podcasts correspondant à votre recherche :\n\n"
-    for episode in selected_episodes:
-        messagefinal += f"{episode['name']}\n{episode['external_urls']['spotify']}\n\n"
+    for episode in selected_episodes[:3]:
+        messagefinal += f"{episode['name']}\n{episode['external_urls']['spotify']}\n\n" 
+elif len(selected_episodes) < 3:
+    messagefinal = "Aucune émission ne correspond à votre thème.\nVeuillez entrer un autre thème." #relancer fonction de recherche
 send_telegram_message(messagefinal)
 
 
-# Changer la langue en fonction de la préférence de l'utilisateur si besoin
-# Faire en sorte que cela fonctionne si le thème contient plusieurs mots
 # Automatiser entièrement le bot telegram 
-# Régler les cas économie et fatigue 
-# Enlever le lien moche en bas si possible
+# Changer la langue en fonction de la préférence de l'utilisateur si besoin
