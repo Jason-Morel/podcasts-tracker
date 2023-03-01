@@ -121,6 +121,7 @@ for idx, show in enumerate(shows_0['shows']['items']):
         print(Fore.CYAN + show['name'], Fore.MAGENTA + show['duration_span'])
 
 
+
 #If there isn't any result with a pair (subject; duration), we could ask if user wants to see results for other durations (if there is any).
 #OR the user could be asked only a subject and algo could send results which are grouped by duration.      
 
