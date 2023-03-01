@@ -5,6 +5,7 @@ Created on Mon Feb 27 16:41:16 2023
 @author: Jason
 """
 
+import os
 from telegram.ext.updater import Updater
 from telegram.update import Update
 from telegram.ext.callbackcontext import CallbackContext
@@ -14,6 +15,8 @@ from telegram.ext.filters import Filters
 from telegram.ext import CallbackQueryHandler
 from telegram import InlineKeyboardButton
 from telegram import InlineKeyboardMarkup
+
+BOT_TOKEN = os.environ.get('BOT_TOKEN')
   
   
 ############################### Bot ############################################
@@ -79,7 +82,7 @@ def second_menu_message():
   return 'Choose the submenu in second menu:'
 
 ############################# Handlers #########################################
-updater = Updater('', use_context=True)
+updater = Updater(BOT_TOKEN, use_context=True)
 
 updater.dispatcher.add_handler(CommandHandler('start', start))
 updater.dispatcher.add_handler(CallbackQueryHandler(main_menu, pattern='main'))
