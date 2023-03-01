@@ -27,7 +27,7 @@ def main_menu(update,context):
   query.edit_message_text(
                         text=main_menu_message(),
                         reply_markup=main_menu_keyboard())
-
+  
 def first_menu(update,context):
   query = update.callback_query
   query.answer()
