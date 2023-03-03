@@ -66,6 +66,23 @@ text = result["message"]["text"]
 time_choice = int(text)
 
 if time_choice == 1:
+   min_duration = 0
+   max_duration = 300000
+elif time_choice == 2:
+   min_duration = 300000
+   max_duration = 900000
+elif time_choice == 3:
+   min_duration = 900000
+   max_duration = 1800000
+elif time_choice == 4:
+   min_duration = 1800000
+   max_duration = 2700000
+elif time_choice == 5:
+   min_duration = 2700000
+   max_duration = 10**1000
+   
+   
+if time_choice == 1:
     time_choice = 'under 5'
 elif time_choice == 2:
     time_choice = '5 to 15'
@@ -76,27 +93,8 @@ elif time_choice == 4:
 elif time_choice == 5:
     time_choice = 'over 45'
     
-if time_choice == 1:
-   min_duration = 0
-   max_duration = 600000
-elif time_choice == 2:
-   min_duration = 600000
-   max_duration = 1200000
-elif time_choice == 3:
-   min_duration = 1200000
-   max_duration = 1800000
-elif time_choice == 4:
-   min_duration = 1800000
-   max_duration = 2400000
-elif time_choice == 5:
-   min_duration = 2400000
-   max_duration = 3000000
-elif time_choice == 6:
-   min_duration = 3000000
-   max_duration = 3600000
-elif time_choice == 7:
-   min_duration = 3600000
-   max_duration = 10**1000
+
+
 
 
 # Demande de la langue d'écoute
