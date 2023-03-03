@@ -22,7 +22,7 @@ TOKEN_telegram = "6179108053:AAFXqqyrlrLvN_tlSARu2_l3TLXkA_EjXTc" # obtenu en cr
 chat_id = "5561504638" #obtenu en allant sur https://api.telegram.org/bot{TOKEN_telegram}/getUpdates
 
 # AUTHENTIFICATION spotipy
-username="31aon4o2j7wikppjnfxfvpvptjtu?si=442993df78a74794"
+username="31aon4o2j7wikppjnfxfvpvptjtu"
 clientId= "e48f42372a074a25b7a0d25da48439d6"
 clientSecret="90eb460ff94847998926f6d380532f59"
  
@@ -136,19 +136,21 @@ if type_choice == 2:
     shows = keep_shows_with_regular_duration()
     shows = round_min_max()
     shows = get_uniform_duration_spans()
+    ready_to_send = {}
     ready_to_send = return_shows(span=time_choice)            
 
     start_offset = 0
-    while len(ready_to_send) < 3:
+    ready_to_send = {}
+    while len(ready_to_send) < 4 and start_offset < shows['shows']['total']:
         shows = get_shows(key_words=search_word, language=language, input_offset=start_offset)
         start_offset += 50
         showmessage = "Voici une liste de plusieurs shows correspondant à vos critères:\n\n"
-        for element in list(ready_to_send.items())[:3]:
-            showmessage += f"{show['name']}\n{show['external_urls']['spotify']}\n\n"
+        for key, value in list(ready_to_send.items())[:3]:
+            showmessage += f"{value['name']}\n{value['external_urls']['spotify']}\n\n"
 
+    send_telegram_message(showmessage)
 
-# Message complètement random ?????
-
+# Pas de shows qui sortent et j'ai des trucs sur la nature dans la console alors que j'ai entré politique ???
 
 ############## PARTIE EPISODE ###################################
 
@@ -156,12 +158,13 @@ if type_choice == 1:
     super_episode = sp.search(q=f'{search_word}', limit=50, type='episode', market='FR') # Implémentation du mot exact dans la fonction search
     selected_episodes = [episode for episode in super_episode['episodes']['items'] if min_duration <= episode['duration_ms'] <= max_duration and episode['language'] == 'fr']
     offset = 50
-    while len(selected_episodes) < 3 and offset < test1['episodes']['total']:
-        results = sp.search(q=query, limit=50, type='episode', market='FR', offset=offset)
+    while len(selected_episodes) < 4 and offset < super_episode['episodes']['total']:
+        results = sp.search(q=f'{search_word}', limit=50, type='episode', market='FR', offset=offset)
         episodes = results['episodes']['items']
         selected_episodes += [episode for episode in episodes if min_duration <= episode['duration_ms'] <= max_duration and episode['language'] == 'fr']
         offset += 50
-        messagefinal = "Voici une liste de plusieurs podcasts correspondant à vos critères :\n\n"
+        messagefinal = "Voici une liste de plusieurs podcasts correspondant à votre recherche :\n\n"
         for episode in selected_episodes[:3]:
-            messagefinal += f"{episode['name']}\n{episode['external_urls']['spotify']}\n\n" 
+            messagefinal += f"{episode['name']}\n{episode['external_urls']['spotify']}\n\n"
+    send_telegram_message(messagefinal)
 
