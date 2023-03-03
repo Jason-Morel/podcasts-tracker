@@ -23,8 +23,8 @@ chat_id = "5561504638" #obtenu en allant sur https://api.telegram.org/bot{TOKEN_
 
 # AUTHENTIFICATION spotipy
 username="31aon4o2j7wikppjnfxfvpvptjtu?si=442993df78a74794"
-clientId= "d2f801660cb84a6a87a52de7002f6f6c"
-clientSecret="7621d9f1ac074da5864e9f2b3b1113fb"
+clientId= "e48f42372a074a25b7a0d25da48439d6"
+clientSecret="90eb460ff94847998926f6d380532f59"
  
 scope = 'playlist-modify-public'
 token = util.prompt_for_user_token(username,scope,client_id=clientId,client_secret=clientSecret,redirect_uri='https://github.com/Jason-Morel/podcasts-tracker')
