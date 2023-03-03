@@ -14,7 +14,7 @@ import requests
 import re
 import time
 import pandas as pd
-from no_authentication import *
+from no_authentication import get_shows, remove_other_languages, get_episodes, get_durations, get_min_max, keep_shows_with_regular_duration, round_min_max, get_uniform_duration_spans, return_shows
 
 
 # Infos de mon telegram :
