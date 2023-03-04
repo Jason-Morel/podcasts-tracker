@@ -34,12 +34,9 @@ sp = authenticate()
 
 
 #User inputs
-input_language = 'fr'
-input_key_words = 'arbre'
-input_duration =  '5 to 15'
-
-#Algo input
-start_offset = 0
+input_language = 'it'
+input_key_words = 'arbero'
+input_duration =  '15 to 30'
 
 
 
@@ -51,7 +48,6 @@ def get_shows(key_words, language, input_offset):
         #print(show['publisher'], ':', show['name'], show['languages'], show['id'])
 
 shows = get_shows(key_words=input_key_words, language=input_language, input_offset=start_offset)
-start_offset += 50
 
 
 
@@ -127,7 +123,7 @@ def keep_shows_with_regular_duration():
     for idx, show in enumerate(shows['shows']['items']):
         if shows['shows']['items'][idx]['min_max']['min']<45:
             if shows['shows']['items'][idx]['min_max']['max']-shows['shows']['items'][idx]['min_max']['min']>15:
-                #print(shows['shows']['items'][idx]['min_max'])
+                print(shows['shows']['items'][idx]['min_max'])
                 del shows['shows']['items'][idx]
     return shows
 
@@ -199,16 +195,29 @@ def return_shows(span):
             
 ready_to_send = return_shows(span=input_duration)            
 
-if len(ready_to_send) >= 5:
-    print('sending shows')
-    #Insert the command to send ready_to_send[:4]
-if len(ready_to_send) < 5:
-    #Insert the command to send ready_to_send
+
+
+#Algo input
+start_offset = 0
+ready_to_send = {}
+sent = 0
+
+
+
+while sent < 5:
     shows = get_shows(key_words=input_key_words, language=input_language, input_offset=start_offset)
     start_offset += 50
+    shows = remove_other_languages(language=input_language)
+    shows = get_episodes(language=input_language)
+    shows = get_durations()
+    shows = get_min_max()
+    shows = keep_shows_with_regular_duration()
+    shows = round_min_max()
+    shows = get_uniform_duration_spans()
+    ready_to_send = return_shows(span=input_duration)
+    sent += len(ready_to_send)
     
-
-
+    
 
 
 #If there isn't any result with a pair (subject; duration), we could ask if user wants to see results for other durations (if there is any).
