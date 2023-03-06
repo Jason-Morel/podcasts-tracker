@@ -32,7 +32,7 @@ sp = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials(client_
 send_telegram_message("Que préférez-vous ?\n1. Recevoir une liste de podcasts à écouter en une fois.\n 2. Recevoir une liste de show dont les longueurs des épisodes seront proches de votre temps d'écoute quotidien.")
 send_telegram_message("Entrez le numéro correspondant à votre choix : ")
 
-time.sleep(10)
+time.sleep(15)
 
 # récupérer la réponse de l'utilisateur
 response = requests.get(f"https://api.telegram.org/bot{TOKEN_telegram}/getUpdates") 
