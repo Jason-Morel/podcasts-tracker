@@ -16,7 +16,7 @@ from telegram.ext import CallbackQueryHandler
 from telegram import InlineKeyboardButton
 from telegram import InlineKeyboardMarkup
 
-BOT_TOKEN = os.environ.get('BOT_TOKEN')
+BOT_TOKEN = '5928162912:AAEujI4qI49nAuyx3n4VIhdQFtPN5jy4JTc'
 
 
 ############################ Keyboards #########################################

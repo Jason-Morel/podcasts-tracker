@@ -15,6 +15,7 @@ import re
 import time
 from spotipy.oauth2 import SpotifyClientCredentials
 from spotipy.oauth2 import SpotifyOAuth
+from no_authentication import find_shows
 
 # Demande du chat_id
 chat_id = input('Démarrez une conversation avec "userinfobot" sur Telegram.\nEntrez votre ID ici :')
@@ -90,20 +91,6 @@ elif time_choice == 5:
     time_choice = 'over 45'
     
 
-# Demande de la langue d'écoute
-send_telegram_message("Quelle langue souhaitez-vous pour vos podcasts ?\n\nVoici les différents codes : Français=fr, Allemand=de, Anglais=en, Espagnol=es, Italien=it")
-send_telegram_message("Entrez le code correspondant à votre choix : ")
-
-
-time.sleep(15)
-
-# Récupérer la ou les langue(s) entrée(s) sur Telegram
-response = requests.get(f"https://api.telegram.org/bot{TOKEN_telegram}/getUpdates")
-data = response.json()
-result = data["result"][-1]
-text = result["message"]["text"]
-language = str(text)
-
 
 # Demande de mot clé à l'utilisateur
 send_telegram_message("Quel type de podcasts souhaitez-vous écouter ?\nEntrez le thème de votre choix : ")
@@ -121,6 +108,8 @@ search_word = re.sub(r' ', '', search_word)
 
 ############### PARTIE SHOW #####################################
 
+if type_choice == 2:
+    find_shows(search_word, time_choice)
 
 ############## PARTIE EPISODE ###################################
 

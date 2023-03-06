@@ -5,19 +5,23 @@ Created on Wed Feb 15 15:45:28 2023
 @author: Jason
 """
 
-import os
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
-from spotipy.oauth2 import SpotifyOAuth
 import pandas as pd
 import re
-from colorama import Fore, Back, Style
+#from colorama import Fore, Back, Style
+import requests
+
+
+
+# Infos de mon telegram :
+TOKEN_telegram = "6179108053:AAFXqqyrlrLvN_tlSARu2_l3TLXkA_EjXTc" # obtenu en créant notre bot avec le telegram BotFather
+chat_id = "6167298721" #obtenu en allant sur https://api.telegram.org/bot{TOKEN_telegram}/getUpdates
 
 
 
 #User inputs
-input_language = 'it'
-input_key_words = 'arbero'
+input_key_words = 'économie'
 input_duration =  '15 to 30'
 
 
@@ -41,8 +45,8 @@ def authenticate():
 
 
 #Find shows related to economy in French market
-def get_shows(key_words, language, input_offset):
-    shows = sp.search(q=key_words, limit=50, offset=input_offset, type='show', market=language)
+def get_shows(key_words, input_offset):
+    shows = sp.search(q=key_words, limit=50, offset=input_offset, type='show', market='fr')
     return shows
     #for idx, show in enumerate(shows['shows']['items']):
         #print(show['publisher'], ':', show['name'], show['languages'], show['id'])
@@ -50,11 +54,11 @@ def get_shows(key_words, language, input_offset):
 
 
 ##Remove shows which are not matching selected language (LYNA: allow user to select languages)
-def remove_other_languages(language):
+def remove_other_languages():
     for idx, show in enumerate(shows['shows']['items']):
         shows['shows']['items'][idx]['languages'] = str(shows['shows']['items'][idx]['languages']).lower()
-        if re.search(language, shows['shows']['items'][idx]['languages']) == None:
-            print(shows['shows']['items'][idx]['name'], shows['shows']['items'][idx]['languages'])
+        if re.search('fr', shows['shows']['items'][idx]['languages']) == None:
+            #print(shows['shows']['items'][idx]['name'], shows['shows']['items'][idx]['languages'])
             del shows['shows']['items'][idx]
     return shows
 
@@ -69,9 +73,9 @@ def remove_other_languages(language):
 
 ##Look at the distribution of the variable duration_ms for the set of episodes
 #1-Add a new key (called 'episodes') to the shows['shows']['items'][idx] dictionaries. It's a dictionary which contains descriptions of the show's first 50 episodes.
-def get_episodes(language):
+def get_episodes():
     for idx, show in enumerate(shows['shows']['items']):
-        shows['shows']['items'][idx]['episodes'] = sp.show_episodes(show_id=shows['shows']['items'][idx]['id'], limit=50, market=language)
+        shows['shows']['items'][idx]['episodes'] = sp.show_episodes(show_id=shows['shows']['items'][idx]['id'], limit=50, market='fr')
     return shows
         
 
@@ -106,7 +110,7 @@ def keep_shows_with_regular_duration():
     for idx, show in enumerate(shows['shows']['items']):
         if shows['shows']['items'][idx]['min_max']['min']<45:
             if shows['shows']['items'][idx]['min_max']['max']-shows['shows']['items'][idx]['min_max']['min']>15:
-                print(shows['shows']['items'][idx]['min_max'])
+                #print(shows['shows']['items'][idx]['min_max'])
                 del shows['shows']['items'][idx]
     return shows
 
@@ -155,14 +159,22 @@ def get_uniform_duration_spans():
     return shows
 
 
-        
+     
+def send_telegram_message(message): # demander à Jason pour fonction propre
+    url = f"https://api.telegram.org/bot{TOKEN_telegram}/sendMessage?chat_id={chat_id}&text={message}"
+    response = requests.get(url)
+
+    
+
 ##Return shows which are matching input_duration
-ready_to_send = {}
 def return_shows(span):
+    ready_to_send = {}
+    send_telegram_message("Voici une liste de plusieurs émissions correspondant à votre recherche :")
     for idx, show in enumerate(shows['shows']['items']):
         try:
             if shows['shows']['items'][idx]['duration_span'] == span:
-                print(Fore.CYAN + show['name'], Fore.MAGENTA + show['duration_span'])
+                #print(Fore.CYAN + show['name'], Fore.MAGENTA + show['duration_span'])
+                send_telegram_message(f"{show['name']}\n{show['external_urls']['spotify']}")
                 ready_to_send[idx] = shows['shows']['items'][idx]
                 #Insert the command to send messages instead of print
         except KeyError:
@@ -170,42 +182,48 @@ def return_shows(span):
     return ready_to_send
 
 
+def find_shows(input_key_words, input_duration):
+    #Algo input
+    start_offset = 0
+    sent = 0
 
-#To have an idea of the intervals we can expect with this method:
-for idx, show in enumerate(shows['shows']['items']):
-    print(shows['shows']['items'][idx]['min_max'])
-
-
-
-#Check that all every shows are assigned to a span
-for idx, show in enumerate(shows['shows']['items']):
-    try:
-        print(Fore.GREEN+ shows['shows']['items'][idx]['name'], shows['shows']['items'][idx]['duration_span'])
-    except KeyError:
-        print(Fore.RED + 'span does not exist', idx)
+    global sp
+    global shows
+    
+    sp = authenticate()
 
 
+    while sent < 5:
+        shows = get_shows(key_words=input_key_words, input_offset=start_offset)
+        start_offset += 50
+        shows = remove_other_languages()
+        shows = get_episodes()
+        shows = get_durations()
+        shows = get_min_max()
+        shows = keep_shows_with_regular_duration()
+        shows = round_min_max()
+        shows = get_uniform_duration_spans()
+        ready_to_send = return_shows(span=input_duration)
+        sent += len(ready_to_send)
 
-#Algo input
-start_offset = 0
-ready_to_send = {}
-sent = 0
-
-sp = authenticate()
 
 
-while sent < 5:
-    shows = get_shows(key_words=input_key_words, language=input_language, input_offset=start_offset)
-    start_offset += 50
-    shows = remove_other_languages(language=input_language)
-    shows = get_episodes(language=input_language)
-    shows = get_durations()
-    shows = get_min_max()
-    shows = keep_shows_with_regular_duration()
-    shows = round_min_max()
-    shows = get_uniform_duration_spans()
-    ready_to_send = return_shows(span=input_duration)
-    sent += len(ready_to_send)
+# #To have an idea of the intervals we can expect with this method:
+# for idx, show in enumerate(shows['shows']['items']):
+#     print(shows['shows']['items'][idx]['min_max'])
+
+
+
+# #Check that all every shows are assigned to a span
+# for idx, show in enumerate(shows['shows']['items']):
+#     try:
+#         print(Fore.GREEN+ shows['shows']['items'][idx]['name'], shows['shows']['items'][idx]['duration_span'])
+#     except KeyError:
+#         print(Fore.RED + 'span does not exist', idx)
+
+
+
+find_shows(input_key_words, input_duration)
     
     
 
