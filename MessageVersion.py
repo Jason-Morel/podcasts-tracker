@@ -156,12 +156,12 @@ if type_choice == 2:
 
 if type_choice == 1:
     super_episode = sp.search(q=f'{search_word}', limit=50, type='episode', market='FR') # Implémentation du mot exact dans la fonction search
-    selected_episodes = [episode for episode in super_episode['episodes']['items'] if min_duration <= episode['duration_ms'] <= max_duration and episode['language'] == 'fr']
+    selected_episodes = [episode for episode in super_episode['episodes']['items'] if min_duration <= episode['duration_ms'] <= max_duration and episode['language'] == f'{language}']
     offset = 50
     while len(selected_episodes) < 4 and offset < super_episode['episodes']['total']:
         results = sp.search(q=f'{search_word}', limit=50, type='episode', market='FR', offset=offset)
         episodes = results['episodes']['items']
-        selected_episodes += [episode for episode in episodes if min_duration <= episode['duration_ms'] <= max_duration and episode['language'] == 'fr']
+        selected_episodes += [episode for episode in episodes if min_duration <= episode['duration_ms'] <= max_duration and episode['language'] == f'{language}']
         offset += 50
         messagefinal = "Voici une liste de plusieurs podcasts correspondant à votre recherche :\n\n"
         for episode in selected_episodes[:3]:
