@@ -132,8 +132,8 @@ if type_choice == 1:
         episodes = results['episodes']['items']
         selected_episodes += [episode for episode in episodes if min_duration <= episode['duration_ms'] <= max_duration and episode['language'] == 'fr']
         offset += 50
-        messagefinal = "Voici une liste de plusieurs podcasts correspondant à votre recherche :\n\n"
-        for episode in selected_episodes[:3]:
-            messagefinal += f"{episode['name']}\n{episode['external_urls']['spotify']}\n\n"
+    messagefinal = "Voici une liste de plusieurs podcasts correspondant à votre recherche :\n\n"
+    for episode in selected_episodes[:3]:
+        messagefinal += f"{episode['name']}\n{episode['external_urls']['spotify']}\n\n"
     send_telegram_message(messagefinal)
             
