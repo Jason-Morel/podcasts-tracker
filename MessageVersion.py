@@ -13,8 +13,9 @@ import spotipy.util as util
 import requests
 import re
 import time
-import pandas as pd
-from no_authentication import get_shows, remove_other_languages, get_episodes, get_durations, get_min_max, keep_shows_with_regular_duration, round_min_max, get_uniform_duration_spans, return_shows
+from spotipy.oauth2 import SpotifyClientCredentials
+from spotipy.oauth2 import SpotifyOAuth
+
 
 
 # Infos de mon telegram :
@@ -22,21 +23,15 @@ TOKEN_telegram = "6179108053:AAFXqqyrlrLvN_tlSARu2_l3TLXkA_EjXTc" # obtenu en cr
 chat_id = "5561504638" #obtenu en allant sur https://api.telegram.org/bot{TOKEN_telegram}/getUpdates
 
 # AUTHENTIFICATION spotipy
-username="31aon4o2j7wikppjnfxfvpvptjtu"
-clientId= "e48f42372a074a25b7a0d25da48439d6"
-clientSecret="90eb460ff94847998926f6d380532f59"
- 
-scope = 'playlist-modify-public'
-token = util.prompt_for_user_token(username,scope,client_id=clientId,client_secret=clientSecret,redirect_uri='https://github.com/Jason-Morel/podcasts-tracker')
-if token:
-     sp = spotipy.Spotify(auth=token)
-     sp.trace = False
+sp = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials(client_id='e48f42372a074a25b7a0d25da48439d6',
+                                                                         client_secret='90eb460ff94847998926f6d380532f59'))
      
 
 # fonction pour envoyer un message à Telegram
 def send_telegram_message(message): # demander à Jason pour fonction propre
     url = f"https://api.telegram.org/bot{TOKEN_telegram}/sendMessage?chat_id={chat_id}&text={message}"
     response = requests.get(url)
+
     
 # Type d'écoute
 send_telegram_message("Que préférez-vous ?\n1. Recevoir une liste de podcasts à écouter en une fois.\n 2. Recevoir une liste de show dont les longueurs des épisodes seront proches de votre temps d'écoute quotidien.")
@@ -94,15 +89,12 @@ elif time_choice == 5:
     time_choice = 'over 45'
     
 
-
-
-
 # Demande de la langue d'écoute
 send_telegram_message("Quelle langue souhaitez-vous pour vos podcasts ?\n\nVoici les différents codes : Français=fr, Allemand=de, Anglais=en, Espagnol=es, Italien=it")
 send_telegram_message("Entrez le code correspondant à votre choix : ")
 
 
-time.sleep(20)
+time.sleep(15)
 
 # Récupérer la ou les langue(s) entrée(s) sur Telegram
 response = requests.get(f"https://api.telegram.org/bot{TOKEN_telegram}/getUpdates")
@@ -127,30 +119,7 @@ search_word = re.sub(r' ', '', search_word)
 
 
 ############### PARTIE SHOW #####################################
-if type_choice == 2:
-    get_shows(search_word, language, 0)
-    shows = remove_other_languages(language)
-    shows = get_episodes(language)
-    shows = get_durations()
-    shows = get_min_max()
-    shows = keep_shows_with_regular_duration()
-    shows = round_min_max()
-    shows = get_uniform_duration_spans()
-    ready_to_send = {}
-    ready_to_send = return_shows(span=time_choice)            
 
-    start_offset = 0
-    ready_to_send = {}
-    while len(ready_to_send) < 4 and start_offset < shows['shows']['total']:
-        shows = get_shows(key_words=search_word, language=language, input_offset=start_offset)
-        start_offset += 50
-        showmessage = "Voici une liste de plusieurs shows correspondant à vos critères:\n\n"
-        for key, value in list(ready_to_send.items())[:3]:
-            showmessage += f"{value['name']}\n{value['external_urls']['spotify']}\n\n"
-
-    send_telegram_message(showmessage)
-
-# Pas de shows qui sortent et j'ai des trucs sur la nature dans la console alors que j'ai entré politique ???
 
 ############## PARTIE EPISODE ###################################
 
@@ -166,5 +135,5 @@ if type_choice == 1:
         messagefinal = "Voici une liste de plusieurs podcasts correspondant à votre recherche :\n\n"
         for episode in selected_episodes[:3]:
             messagefinal += f"{episode['name']}\n{episode['external_urls']['spotify']}\n\n"
-    send_telegram_message(messagefinal)
+            send_telegram_message(messagefinal)
 
