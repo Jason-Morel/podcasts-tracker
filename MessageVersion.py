@@ -16,11 +16,12 @@ import time
 from spotipy.oauth2 import SpotifyClientCredentials
 from spotipy.oauth2 import SpotifyOAuth
 
+# Demande du chat_id
+chat_id = input('Démarrez une conversation avec "userinfobot" sur Telegram.\nEntrez votre ID ici :')
 
 
 # Infos de mon telegram :
 TOKEN_telegram = "6179108053:AAFXqqyrlrLvN_tlSARu2_l3TLXkA_EjXTc" # obtenu en créant notre bot avec le telegram BotFather
-chat_id = "5561504638" #obtenu en allant sur https://api.telegram.org/bot{TOKEN_telegram}/getUpdates
 
 # AUTHENTIFICATION spotipy
 sp = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials(client_id='e48f42372a074a25b7a0d25da48439d6',
@@ -136,4 +137,3 @@ if type_choice == 1:
     for episode in selected_episodes[:3]:
         messagefinal += f"{episode['name']}\n{episode['external_urls']['spotify']}\n\n"
     send_telegram_message(messagefinal)
-            
