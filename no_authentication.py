@@ -23,6 +23,7 @@ chat_id = "6167298721" #obtenu en allant sur https://api.telegram.org/bot{TOKEN_
 #User inputs
 input_key_words = 'économie'
 input_duration =  '15 to 30'
+time_choice = 2
 
 
 
@@ -164,7 +165,26 @@ def send_telegram_message(message): # demander à Jason pour fonction propre
     url = f"https://api.telegram.org/bot{TOKEN_telegram}/sendMessage?chat_id={chat_id}&text={message}"
     response = requests.get(url)
 
-    
+
+
+def range_for_shows(time_choice):
+    if time_choice == 1:
+        input_duration = 'under 5'
+        return input_duration
+    elif time_choice == 2:
+        input_duration = '5 to 15'
+        return input_duration
+    elif time_choice == 3:
+        input_duration = '15 to 30'
+        return input_duration
+    elif time_choice == 4:
+        input_duration = '30 to 45'
+        return input_duration
+    elif time_choice == 5:
+        input_duration = 'over 45'
+        return input_duration    
+
+
 
 ##Return shows which are matching input_duration
 def return_shows(span):
@@ -182,15 +202,15 @@ def return_shows(span):
     return ready_to_send
 
 
+
 def find_shows(input_key_words, input_duration):
     #Algo input
     start_offset = 0
     sent = 0
 
-    global sp
     global shows
     
-    sp = authenticate()
+    input_duration = range_for_shows(time_choice)
 
 
     while sent < 5:
