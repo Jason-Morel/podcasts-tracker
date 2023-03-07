@@ -18,8 +18,6 @@ from spotipy.oauth2 import SpotifyOAuth
 from no_authentication import find_shows
 from fonctions import send_telegram_message, range_for_episode, range_for_show, find_episode
 
-min_duration = 0
-max_duration = 1
 
 # Demande du chat_id
 chat_id = input('Démarrez une conversation avec "userinfobot" sur Telegram.\nEntrez votre ID ici :')
@@ -32,10 +30,10 @@ sp = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials(client_
                                                                          client_secret='90eb460ff94847998926f6d380532f59'))
     
 # Type d'écoute
-send_telegram_message("Que préférez-vous ?\n1. Recevoir une liste de podcasts à écouter en une fois.\n 2. Recevoir une liste de show dont les longueurs des épisodes seront proches de votre temps d'écoute quotidien.")
-send_telegram_message("Entrez le numéro correspondant à votre choix : ")
+send_telegram_message("Que préférez-vous ?\n1. Recevoir une liste de podcasts à écouter en une fois.\n 2. Recevoir une liste de show dont les longueurs des épisodes seront proches de votre temps d'écoute quotidien.", chat_id, TOKEN_telegram)
+send_telegram_message("Entrez le numéro correspondant à votre choix : ", chat_id, TOKEN_telegram)
 
-time.sleep(15)
+time.sleep(20)
 
 # récupérer la réponse de l'utilisateur
 response = requests.get(f"https://api.telegram.org/bot{TOKEN_telegram}/getUpdates") 
@@ -45,10 +43,10 @@ text = result["message"]["text"]
 type_choice = int(text)
 
 # Demande du temps d'écoute souhaité
-send_telegram_message("Quel est le temps d'écoute que vous souhaitez ?\n1. Moins de 5 minutes\n2. De 5 à 15 minutes\n3. De 15 à 30 minutes\n4. De 30 à 45 minutes\n5. Plus de 45 minutes")
-send_telegram_message("Entrez le numéro correspondant à votre choix : ")
+send_telegram_message("Quel est le temps d'écoute que vous souhaitez ?\n1. Moins de 5 minutes\n2. De 5 à 15 minutes\n3. De 15 à 30 minutes\n4. De 30 à 45 minutes\n5. Plus de 45 minutes", chat_id, TOKEN_telegram)
+send_telegram_message("Entrez le numéro correspondant à votre choix : ", chat_id, TOKEN_telegram)
 
-time.sleep(10)
+time.sleep(20)
 
 # récupérer la réponse de l'utilisateur
 response = requests.get(f"https://api.telegram.org/bot{TOKEN_telegram}/getUpdates") 
@@ -62,9 +60,9 @@ range_for_episode(time_choice)
 range_for_show(time_choice)
 
 # Demande de mot clé à l'utilisateur
-send_telegram_message("Quel type de podcasts souhaitez-vous écouter ?\nEntrez le thème de votre choix : ")
+send_telegram_message("Quel type de podcasts souhaitez-vous écouter ?\nEntrez le thème de votre choix : ", chat_id, TOKEN_telegram)
    
-time.sleep(15)
+time.sleep(20)
 
 # Récupérer le mot exact entré sur Telegram
 response = requests.get(f"https://api.telegram.org/bot{TOKEN_telegram}/getUpdates")

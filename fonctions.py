@@ -15,15 +15,12 @@ sp = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials(client_
 TOKEN_telegram = 0
 chat_id = 0
 
-def send_telegram_message(message): 
+def send_telegram_message(message, chat_id, TOKEN_telegram): 
     url = f"https://api.telegram.org/bot{TOKEN_telegram}/sendMessage?chat_id={chat_id}&text={message}"
     response = requests.get(url)
     
 
-
-time_choice = 1
-
-def range_for_episode(time):
+def range_for_episode(time_choice):
     if time_choice == 1:
         min_duration = 0
         max_duration = 300000
@@ -42,7 +39,7 @@ def range_for_episode(time):
 
     return min_duration, max_duration
 
-def range_for_show(time):
+def range_for_show(time_choice):
     if time_choice == 1:
         return 'under 5'
     elif time_choice == 2:
@@ -55,12 +52,9 @@ def range_for_show(time):
         return 'over 45'
     
     
-def find_episode(key, min_d, max_d):    
+def find_episode(search_word, min_duration, max_duration):    
     global sp
-    min_duration = 0
-    max_duration = 1
-    search_word = 0
-    
+
     super_episode = sp.search(q=f'{search_word}', limit=50, type='episode', market='FR') # Implémentation du mot exact dans la fonction search
     selected_episodes = [episode for episode in super_episode['episodes']['items'] if min_duration <= episode['duration_ms'] <= max_duration and episode['language'] == 'fr']
     offset = 50
@@ -72,4 +66,4 @@ def find_episode(key, min_d, max_d):
     messagefinal = "Voici une liste de plusieurs podcasts correspondant à votre recherche :\n\n"
     for episode in selected_episodes[:3]:
         messagefinal += f"{episode['name']}\n{episode['external_urls']['spotify']}\n\n"
-    send_telegram_message(messagefinal)
+    send_telegram_message(messagefinal, chat_id, TOKEN_telegram)
