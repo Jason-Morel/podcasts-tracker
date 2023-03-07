@@ -22,7 +22,6 @@ sp = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials(client_
                                                                          client_secret='90eb460ff94847998926f6d380532f59'))
     
 
-# Fonction appelée lors de la soumission du formulaire
 def submit_form():
     # Récupération des valeurs sélectionnées par l'utilisateur
     type_choice = type_var.get()
@@ -37,6 +36,8 @@ def submit_form():
     ############### PARTIE SHOW #####################################
     if type_choice == 2:
         find_shows(search_word, time_choice, chat_id, TOKEN_telegram)
+
+
 
 # Création de la fenêtre et des widgets
 root = tk.Tk()
