@@ -55,6 +55,7 @@ result = data["result"][-1]
 text = result["message"]["text"]
 time_choice = int(text)
 
+
 range_for_episode(time_choice)
 
 range_for_show(time_choice)

@@ -37,7 +37,8 @@ def range_for_episode(time_choice):
         min_duration = 2700000
         max_duration = 10**1000
 
-    return min_duration, max_duration
+    return min_duration
+    return max_duration
 
 def range_for_show(time_choice):
     if time_choice == 1:
