@@ -1,2 +1,0 @@
-Authentification: https://towardsdatascience.com/extracting-song-data-from-the-spotify-api-using-python-b1e79388d50
-Best practice set-up: https://medium.com/mlearning-ai/spotify-api-project-using-python-5fbcab921f5e
