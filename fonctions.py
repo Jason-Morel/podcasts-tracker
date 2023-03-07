@@ -70,8 +70,6 @@ def find_episode(search_word, time_choice):
     min_duration = min_for_episode(time_choice)
     max_duration = max_for_episode(time_choice)
 
-    global sp
-
     super_episode = sp.search(q=search_word, limit=50, type='episode', market='FR') # Implémentation du mot dans la fonction search
     selected_episodes = [episode for episode in super_episode['episodes']['items'] if min_duration <= episode['duration_ms'] <= max_duration and episode['language'] == 'fr']
     offset = 50
