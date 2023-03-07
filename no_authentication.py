@@ -209,7 +209,9 @@ def find_shows(input_key_words, input_duration):
     sent = 0
 
     global shows
+    global sp
     
+    sp = authenticate()
     input_duration = range_for_shows(time_choice)
 
 

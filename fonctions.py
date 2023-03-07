@@ -20,40 +20,39 @@ def send_telegram_message(message, chat_id, TOKEN_telegram):
     response = requests.get(url)
     
 
-def range_for_episode(time_choice):
+def min_for_episode(time_choice):
     if time_choice == 1:
         min_duration = 0
-        max_duration = 300000
     elif time_choice == 2:
         min_duration = 300000
-        max_duration = 900000
     elif time_choice == 3:
         min_duration = 900000
-        max_duration = 1800000
     elif time_choice == 4:
         min_duration = 1800000
-        max_duration = 2700000
     elif time_choice == 5:
         min_duration = 2700000
-        max_duration = 10**1000
 
     return min_duration
-    return max_duration
 
-def range_for_show(time_choice):
+def max_for_episode(time_choice):
     if time_choice == 1:
-        return 'under 5'
+        max_duration = 300000
     elif time_choice == 2:
-        return '5 to 15'
+        max_duration = 900000
     elif time_choice == 3:
-        return '15 to 30'
+        max_duration = 1800000
     elif time_choice == 4:
-        return '30 to 45'
+        max_duration = 2700000
     elif time_choice == 5:
-        return 'over 45'
+        max_duration = 10**1000
+        
+    return max_duration
     
+
     
-def find_episode(search_word, min_duration, max_duration):    
+def find_episode(search_word, time_choice):    
+    min_duration = min_for_episode(time_choice)
+    max_duration = max_for_episode(time_choice)
     global sp
 
     super_episode = sp.search(q=f'{search_word}', limit=50, type='episode', market='FR') # Implémentation du mot exact dans la fonction search
@@ -68,3 +67,5 @@ def find_episode(search_word, min_duration, max_duration):
     for episode in selected_episodes[:3]:
         messagefinal += f"{episode['name']}\n{episode['external_urls']['spotify']}\n\n"
     send_telegram_message(messagefinal, chat_id, TOKEN_telegram)
+    
+    return selected_episodes, messagefinal

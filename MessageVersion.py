@@ -16,7 +16,7 @@ import time
 from spotipy.oauth2 import SpotifyClientCredentials
 from spotipy.oauth2 import SpotifyOAuth
 from no_authentication import find_shows
-from fonctions import send_telegram_message, range_for_episode, range_for_show, find_episode
+from fonctions import send_telegram_message, find_episode
 
 
 # Demande du chat_id
@@ -56,10 +56,6 @@ text = result["message"]["text"]
 time_choice = int(text)
 
 
-range_for_episode(time_choice)
-
-range_for_show(time_choice)
-
 # Demande de mot clé à l'utilisateur
 send_telegram_message("Quel type de podcasts souhaitez-vous écouter ?\nEntrez le thème de votre choix : ", chat_id, TOKEN_telegram)
    
@@ -71,14 +67,12 @@ data = response.json()
 result = data["result"][-1]
 text = result["message"]["text"]
 search_word = str(text)
-search_word = re.sub(r' ', '', search_word)
 
 
 ############### PARTIE SHOW #####################################
-
 if type_choice == 2:
     find_shows(search_word, time_choice)
 
 ############## PARTIE EPISODE ###################################
 if type_choice == 1:
-    find_episode(search_word, min_duration, max_duration)
+    find_episode(search_word, time_choice)
