@@ -20,14 +20,6 @@ def send_telegram_message(message, chat_id, TOKEN_telegram):
     response = requests.get(url)
     
     return response
-    
-def get_telegram_message():
-    response = requests.get(f"https://api.telegram.org/bot{TOKEN_telegram}/getUpdates") 
-    data = response.json()
-    result = data["result"][-1]
-    text = result["message"]["text"]
-    
-    return text
 
 
 def min_for_episode(time_choice):
