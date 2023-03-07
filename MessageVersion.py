@@ -14,9 +14,6 @@ from spotipy.oauth2 import SpotifyClientCredentials
 from show_treatment import find_shows
 from episode_treatment import find_episode
 
-# Demande du chat_id
-chat_id = input('\n\n\nDémarrez une conversation avec "userinfobot" sur Telegram.\nEntrez votre ID ici :')
-
 # Infos de mon telegram :
 TOKEN_telegram = "6179108053:AAFXqqyrlrLvN_tlSARu2_l3TLXkA_EjXTc" # obtenu en créant notre bot avec le telegram BotFather
 
@@ -31,6 +28,7 @@ def submit_form():
     type_choice = type_var.get()
     time_choice = time_var.get()
     search_word = search_entry.get()
+    chat_id = chat_entry.get()
     
     ############## PARTIE EPISODE ###################################
     if type_choice == 1:
@@ -43,6 +41,10 @@ def submit_form():
 # Création de la fenêtre et des widgets
 root = tk.Tk()
 root.title("Choix de podcasts")
+
+chat_label = tk.Label(root, text="Démarrez une conversation avec 'userinfobot' sur Telegram.\nEntrez votre ID ici :").pack(pady=10)
+chat_entry = tk.Entry(root)
+chat_entry.pack()
 
 type_label = tk.Label(root, text="Que préférez-vous ?").pack(pady=10)
 type_var = tk.IntVar()
