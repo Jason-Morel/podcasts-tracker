@@ -14,16 +14,16 @@ import requests
 
 
 
-# Infos de mon telegram :
-TOKEN_telegram = "6179108053:AAFXqqyrlrLvN_tlSARu2_l3TLXkA_EjXTc" # obtenu en créant notre bot avec le telegram BotFather
-chat_id = "6167298721" #obtenu en allant sur https://api.telegram.org/bot{TOKEN_telegram}/getUpdates
+# # Infos de mon telegram :
+# TOKEN_telegram = "6179108053:AAFXqqyrlrLvN_tlSARu2_l3TLXkA_EjXTc" # obtenu en créant notre bot avec le telegram BotFather
+# chat_id = "6167298721" #obtenu en allant sur https://api.telegram.org/bot{TOKEN_telegram}/getUpdates
 
 
 
-#User inputs
-input_key_words = 'économie'
-input_duration =  '15 to 30'
-time_choice = 2
+# #User inputs
+# input_key_words = 'économie'
+# input_duration =  '15 to 30'
+# time_choice = 2
 
 
 
@@ -161,7 +161,7 @@ def get_uniform_duration_spans():
 
 
      
-def send_telegram_message(message): # demander à Jason pour fonction propre
+def send_telegram_message(message, chat_id, TOKEN_telegram): 
     url = f"https://api.telegram.org/bot{TOKEN_telegram}/sendMessage?chat_id={chat_id}&text={message}"
     response = requests.get(url)
 
@@ -194,7 +194,7 @@ def return_shows(span):
         try:
             if shows['shows']['items'][idx]['duration_span'] == span:
                 #print(Fore.CYAN + show['name'], Fore.MAGENTA + show['duration_span'])
-                send_telegram_message(f"{show['name']}\n{show['external_urls']['spotify']}")
+                send_telegram_message(f"{show['name']}\n{show['external_urls']['spotify']}", chat_id, TOKEN_telegram)
                 ready_to_send[idx] = shows['shows']['items'][idx]
                 #Insert the command to send messages instead of print
         except KeyError:
@@ -208,11 +208,12 @@ def find_shows(input_key_words, input_duration):
     start_offset = 0
     sent = 0
 
-    global shows
     global sp
+    global shows
+    global time_choice
+
     
     sp = authenticate()
-    input_duration = range_for_shows(time_choice)
 
 
     while sent < 5:
@@ -244,11 +245,10 @@ def find_shows(input_key_words, input_duration):
 #         print(Fore.RED + 'span does not exist', idx)
 
 
-
-find_shows(input_key_words, input_duration)
     
     
 
+#Notes:
 
 #If there isn't any result with a pair (subject; duration), we could ask if user wants to see results for other durations (if there is any).
 #OR the user could be asked only a subject and algo could send results which are grouped by duration.      
