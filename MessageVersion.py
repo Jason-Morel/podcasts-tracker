@@ -8,6 +8,7 @@ Created on Wed Feb 22 16:41:17 2023
 
 # S'assurer d'avoir fait "%reset" dans la console au début
 
+import tkinter as tk
 import spotipy # la librairie pour manipuler l'api spotify
 from spotipy.oauth2 import SpotifyClientCredentials
 from show_treatment import find_shows
@@ -23,25 +24,46 @@ TOKEN_telegram = "6179108053:AAFXqqyrlrLvN_tlSARu2_l3TLXkA_EjXTc" # obtenu en cr
 sp = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials(client_id='e48f42372a074a25b7a0d25da48439d6',
                                                                          client_secret='90eb460ff94847998926f6d380532f59'))
     
-# Type d'écoute
-print("\n\n\nQue préférez-vous ?\n1. Recevoir une liste de podcasts à écouter en une fois.\n2. Recevoir une liste de show dont les longueurs des épisodes seront proches de votre temps d'écoute quotidien.")
-type_choice = int(input("\nEntrez le numéro correspondant à votre choix : "))
 
+# Fonction appelée lors de la soumission du formulaire
+def submit_form():
+    # Récupération des valeurs sélectionnées par l'utilisateur
+    type_choice = type_var.get()
+    time_choice = time_var.get()
+    search_word = search_entry.get()
+    
+    ############## PARTIE EPISODE ###################################
+    if type_choice == 1:
+        find_episode(search_word, time_choice, chat_id, TOKEN_telegram)
 
-# Demande du temps d'écoute souhaité
-print("\n\n\nQuel est le temps d'écoute que vous souhaitez ?\n1. Moins de 5 minutes\n2. De 5 à 15 minutes\n3. De 15 à 30 minutes\n4. De 30 à 45 minutes\n5. Plus de 45 minutes")
-time_choice = int(input("\nEntrez le numéro correspondant à votre choix : "))
+    ############### PARTIE SHOW #####################################
+    if type_choice == 2:
+        find_shows(search_word, time_choice, chat_id, TOKEN_telegram)
 
-# Demande de mot clé à l'utilisateur
-search_word = input("\n\n\nQuel type de podcasts souhaitez-vous écouter ?\nEntrez le thème de votre choix : ")
+# Création de la fenêtre et des widgets
+root = tk.Tk()
+root.title("Choix de podcasts")
 
-############## PARTIE EPISODE ###################################
-if type_choice == 1:
-    find_episode(search_word, time_choice, chat_id, TOKEN_telegram)
+type_label = tk.Label(root, text="Que préférez-vous ?").pack(pady=10)
+type_var = tk.IntVar()
+type1_radio = tk.Radiobutton(root, text="Recevoir une liste de podcasts à écouter en une fois.", variable=type_var, value=1).pack(anchor='w')
+type2_radio = tk.Radiobutton(root, text="Recevoir une liste de show dont les longueurs des épisodes seront proches de votre temps d'écoute quotidien.", variable=type_var, value=2).pack(anchor='w')
 
-############### PARTIE SHOW #####################################
-if type_choice == 2:
-    find_shows(search_word, time_choice, chat_id, TOKEN_telegram)
+time_label = tk.Label(root, text="Quel est le temps d'écoute que vous souhaitez ?").pack(pady=10)
+time_var = tk.IntVar()
+time1_radio = tk.Radiobutton(root, text="Moins de 5 minutes", variable=time_var, value=1).pack(anchor='w')
+time2_radio = tk.Radiobutton(root, text="De 5 à 15 minutes", variable=time_var, value=2).pack(anchor='w')
+time3_radio = tk.Radiobutton(root, text="De 15 à 30 minutes", variable=time_var, value=3).pack(anchor='w')
+time4_radio = tk.Radiobutton(root, text="De 30 à 45 minutes", variable=time_var, value=4).pack(anchor='w')
+time5_radio = tk.Radiobutton(root, text="Plus de 45 minutes", variable=time_var, value=5).pack(anchor='w')
+
+search_label = tk.Label(root, text="Quel type de podcasts souhaitez-vous écouter ?").pack(pady=10)
+search_entry = tk.Entry(root)
+search_entry.pack()
+
+submit_button = tk.Button(root, text="Valider", command=submit_form).pack(pady=10)
+
+root.mainloop()
 
 # Fin de la conversation
 print('\nVous pouvez aller sur votre compte Telegram pour découvrir le résultat de votre demande')
