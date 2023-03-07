@@ -62,7 +62,7 @@ time3_radio = tk.Radiobutton(root, text="De 15 à 30 minutes", variable=time_var
 time4_radio = tk.Radiobutton(root, text="De 30 à 45 minutes", variable=time_var, value=4).pack(anchor='w')
 time5_radio = tk.Radiobutton(root, text="Plus de 45 minutes", variable=time_var, value=5).pack(anchor='w')
 
-search_label = tk.Label(root, text="Quel type de podcasts souhaitez-vous écouter ?\nEntrez le thème de votre choix").pack(pady=10) # DEMANDE DU THÈME D'ÉCOUTE
+search_label = tk.Label(root, text="Quel type de podcasts souhaitez-vous écouter ?\nEntrez le thème de votre choix :").pack(pady=10) # DEMANDE DU THÈME D'ÉCOUTE
 search_entry = tk.Entry(root)
 search_entry.pack()
 
