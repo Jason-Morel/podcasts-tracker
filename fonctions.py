@@ -9,19 +9,21 @@ import requests
 import spotipy 
 from spotipy.oauth2 import SpotifyClientCredentials
 
+# Authentification spotify
 sp = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials(client_id='e48f42372a074a25b7a0d25da48439d6',
                                                                          client_secret='90eb460ff94847998926f6d380532f59'))
-
+# input arbitraires
 TOKEN_telegram = 0
 chat_id = 0
 
+# fonction pour envoyer des messages sur Telegram à un ID donné
 def send_telegram_message(message, chat_id, TOKEN_telegram): 
     url = f"https://api.telegram.org/bot{TOKEN_telegram}/sendMessage?chat_id={chat_id}&text={message}"
     response = requests.get(url)
     
     return response
 
-
+# fonction pour récupérer les messages envoyés par l'utilisateur sur Telegram
 def get_telegram_response(TOKEN_telegram):
     response = requests.get(f"https://api.telegram.org/bot{TOKEN_telegram}/getUpdates")
     data = response.json()
@@ -30,7 +32,7 @@ def get_telegram_response(TOKEN_telegram):
     
     return text
 
-
+# Défini la durée minimale demandée par l'utilisateur
 def min_for_episode(time_choice):
     if time_choice == 1:
         min_duration = 0
@@ -45,6 +47,7 @@ def min_for_episode(time_choice):
 
     return min_duration
 
+# Défini la durée maximale demandée par l'utilisateur
 def max_for_episode(time_choice):
     if time_choice == 1:
         max_duration = 300000
@@ -60,7 +63,9 @@ def max_for_episode(time_choice):
     return max_duration
     
 
-    
+# trouve une liste d'épisodes selon le thème inscrit, dont la durée est comprise entre la durée minimale et la durée maximale et en français 
+# envoie les noms et liens des épisodes à l'utilisateur sur Telegram
+   
 def find_episode(search_word, time_choice):    
     min_duration = min_for_episode(time_choice)
     max_duration = max_for_episode(time_choice)
