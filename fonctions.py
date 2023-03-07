@@ -84,6 +84,6 @@ def find_episode(search_word, time_choice):
     messagefinal = "Voici une liste de plusieurs podcasts correspondant à votre recherche :\n\n"
     for episode in selected_episodes[:3]:
         messagefinal += f"{episode['name']}\n{episode['external_urls']['spotify']}\n\n"
-    reponsefinale = send_telegram_message(messagefinal, chat_id, TOKEN_telegram)
+    send_telegram_message(messagefinal, chat_id, TOKEN_telegram)
     
-    return selected_episodes, reponsefinale
+    return selected_episodes, messagefinal
