@@ -9,12 +9,10 @@ Created on Wed Feb 22 16:41:17 2023
 # S'assurer d'avoir fait "%reset" dans la console au début
 
 import spotipy # la librairie pour manipuler l'api spotify
-import spotipy.util as util
 import requests
 import re
 import time
 from spotipy.oauth2 import SpotifyClientCredentials
-from spotipy.oauth2 import SpotifyOAuth
 from no_authentication import find_shows
 from fonctions import send_telegram_message, find_episode
 
@@ -54,7 +52,6 @@ data = response.json()
 result = data["result"][-1]
 text = result["message"]["text"]
 time_choice = int(text)
-
 
 # Demande de mot clé à l'utilisateur
 send_telegram_message("Quel type de podcasts souhaitez-vous écouter ?\nEntrez le thème de votre choix : ", chat_id, TOKEN_telegram)
