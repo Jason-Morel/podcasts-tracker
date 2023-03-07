@@ -12,7 +12,7 @@ import spotipy # la librairie pour manipuler l'api spotify
 import time
 from spotipy.oauth2 import SpotifyClientCredentials
 from show_treatment import find_shows
-from fonctions import find_episode
+from episode_treatment import find_episode
 from TelegramMessages import send_telegram_message, get_telegram_response
 
 
