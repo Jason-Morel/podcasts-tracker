@@ -61,4 +61,4 @@ if type_choice == 1:
 
 ############### PARTIE SHOW #####################################
 if type_choice == 2:
-    find_shows(search_word, time_choice)
+    find_shows(search_word, time_choice, chat_id, TOKEN_telegram)

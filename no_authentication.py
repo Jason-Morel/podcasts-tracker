@@ -187,9 +187,9 @@ def range_for_shows(time_choice):
 
 
 ##Return shows which are matching input_duration
-def return_shows(span):
+def return_shows(span, chat_id, TOKEN_telegram):
     ready_to_send = {}
-    send_telegram_message("Voici une liste de plusieurs émissions correspondant à votre recherche :")
+    send_telegram_message("Voici une liste de plusieurs émissions correspondant à votre recherche :", chat_id, TOKEN_telegram)
     for idx, show in enumerate(shows['shows']['items']):
         try:
             if shows['shows']['items'][idx]['duration_span'] == span:
@@ -203,7 +203,7 @@ def return_shows(span):
 
 
 
-def find_shows(input_key_words, input_duration):
+def find_shows(input_key_words, input_duration, chat_id, TOKEN_telegram):
     #Algo input
     start_offset = 0
     sent = 0
@@ -217,7 +217,7 @@ def find_shows(input_key_words, input_duration):
 
 
     while sent < 5:
-        shows = get_shows(key_words=input_key_words, input_offset=start_offset)
+        shows = get_shows(input_key_words, start_offset)
         start_offset += 50
         shows = remove_other_languages()
         shows = get_episodes()
@@ -226,7 +226,7 @@ def find_shows(input_key_words, input_duration):
         shows = keep_shows_with_regular_duration()
         shows = round_min_max()
         shows = get_uniform_duration_spans()
-        ready_to_send = return_shows(span=input_duration)
+        ready_to_send = return_shows(input_duration, chat_id, TOKEN_telegram)
         sent += len(ready_to_send)
 
 
