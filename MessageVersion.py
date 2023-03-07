@@ -20,6 +20,8 @@ TOKEN_telegram = "6179108053:AAFXqqyrlrLvN_tlSARu2_l3TLXkA_EjXTc" # obtenu en cr
 # AUTHENTIFICATION spotipy
 sp = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials(client_id='e48f42372a074a25b7a0d25da48439d6',
                                                                          client_secret='90eb460ff94847998926f6d380532f59'))
+
+
     
 
 def submit_form():
@@ -41,18 +43,18 @@ def submit_form():
 
 # Création de la fenêtre et des widgets
 root = tk.Tk()
-root.title("Choix de podcasts")
+root.title("Choix de podcasts") # CRÉATION DU TITRE DE LA FENÊTRE
 
-chat_label = tk.Label(root, text="Démarrez une conversation avec 'userinfobot' sur Telegram.\nEntrez votre ID ici :").pack(pady=10)
+chat_label = tk.Label(root, text="Démarrez une conversation avec 'userinfobot' sur Telegram.\nEntrez votre ID ici :").pack(pady=10) # DEMANDE DE L'ID DE L'UTILISATEUR 
 chat_entry = tk.Entry(root)
 chat_entry.pack()
 
-type_label = tk.Label(root, text="Que préférez-vous ?").pack(pady=10)
+type_label = tk.Label(root, text="Que préférez-vous ?").pack(pady=10) # DEMANDE DE LA PRÉFÉRENCE ENTRE SHOW OU EPISODE
 type_var = tk.IntVar()
 type1_radio = tk.Radiobutton(root, text="Recevoir une liste de podcasts à écouter en une fois.", variable=type_var, value=1).pack(anchor='w')
 type2_radio = tk.Radiobutton(root, text="Recevoir une liste de show dont les longueurs des épisodes seront proches de votre temps d'écoute quotidien.", variable=type_var, value=2).pack(anchor='w')
 
-time_label = tk.Label(root, text="Quel est le temps d'écoute que vous souhaitez ?").pack(pady=10)
+time_label = tk.Label(root, text="Quel est le temps d'écoute que vous souhaitez ?").pack(pady=10) # DEMANDE DU TEMPS D'ÉCOUTE
 time_var = tk.IntVar()
 time1_radio = tk.Radiobutton(root, text="Moins de 5 minutes", variable=time_var, value=1).pack(anchor='w')
 time2_radio = tk.Radiobutton(root, text="De 5 à 15 minutes", variable=time_var, value=2).pack(anchor='w')
@@ -60,13 +62,15 @@ time3_radio = tk.Radiobutton(root, text="De 15 à 30 minutes", variable=time_var
 time4_radio = tk.Radiobutton(root, text="De 30 à 45 minutes", variable=time_var, value=4).pack(anchor='w')
 time5_radio = tk.Radiobutton(root, text="Plus de 45 minutes", variable=time_var, value=5).pack(anchor='w')
 
-search_label = tk.Label(root, text="Quel type de podcasts souhaitez-vous écouter ?").pack(pady=10)
+search_label = tk.Label(root, text="Quel type de podcasts souhaitez-vous écouter ?\nEntrez le thème de votre choix").pack(pady=10) # DEMANDE DU THÈME D'ÉCOUTE
 search_entry = tk.Entry(root)
 search_entry.pack()
 
-submit_button = tk.Button(root, text="Valider", command=submit_form).pack(pady=10)
+submit_button = tk.Button(root, text="Valider", command=submit_form).pack(pady=10) # CRÉATION DU BOUTON "VALIDER"
 
-root.mainloop()
+root.mainloop() # MISE EN ROUTE DE L'INTERFACE
+
+
 
 # Fin de la conversation
 print('\nVous pouvez aller sur votre compte Telegram pour découvrir le résultat de votre demande')
