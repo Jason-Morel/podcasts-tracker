@@ -58,7 +58,7 @@ send_telegram_message("Quel type de podcasts souhaitez-vous écouter ?\nEntrez l
    
 time.sleep(20)
 
-# Récupérer le mot exact entré sur Telegram
+# Récupérer la réponse de l'utilisateur
 response = requests.get(f"https://api.telegram.org/bot{TOKEN_telegram}/getUpdates")
 data = response.json()
 result = data["result"][-1]
