@@ -68,11 +68,10 @@ result = data["result"][-1]
 text = result["message"]["text"]
 search_word = str(text)
 
-
-############### PARTIE SHOW #####################################
-if type_choice == 2:
-    find_shows(search_word, time_choice)
-
 ############## PARTIE EPISODE ###################################
 if type_choice == 1:
     find_episode(search_word, time_choice)
+    
+############### PARTIE SHOW #####################################
+if type_choice == 2:
+    find_shows(search_word, time_choice)
