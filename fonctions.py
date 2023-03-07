@@ -22,6 +22,15 @@ def send_telegram_message(message, chat_id, TOKEN_telegram):
     return response
 
 
+def get_telegram_response(TOKEN_telegram):
+    response = requests.get(f"https://api.telegram.org/bot{TOKEN_telegram}/getUpdates")
+    data = response.json()
+    result = data["result"][-1]
+    text = result["message"]["text"]
+    
+    return text
+
+
 def min_for_episode(time_choice):
     if time_choice == 1:
         min_duration = 0
@@ -55,6 +64,7 @@ def max_for_episode(time_choice):
 def find_episode(search_word, time_choice):    
     min_duration = min_for_episode(time_choice)
     max_duration = max_for_episode(time_choice)
+
     global sp
 
     super_episode = sp.search(q=search_word, limit=50, type='episode', market='FR') # Implémentation du mot dans la fonction search
@@ -69,6 +79,6 @@ def find_episode(search_word, time_choice):
     messagefinal = "Voici une liste de plusieurs podcasts correspondant à votre recherche :\n\n"
     for episode in selected_episodes[:3]:
         messagefinal += f"{episode['name']}\n{episode['external_urls']['spotify']}\n\n"
-    send_telegram_message(messagefinal, chat_id, TOKEN_telegram)
+    reponsefinale = send_telegram_message(messagefinal, chat_id, TOKEN_telegram)
     
-    return selected_episodes, messagefinal
+    return selected_episodes, reponsefinale

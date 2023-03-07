@@ -9,12 +9,10 @@ Created on Wed Feb 22 16:41:17 2023
 # S'assurer d'avoir fait "%reset" dans la console au début
 
 import spotipy # la librairie pour manipuler l'api spotify
-import requests
-import re
 import time
 from spotipy.oauth2 import SpotifyClientCredentials
 from no_authentication import find_shows
-from fonctions import send_telegram_message, find_episode
+from fonctions import send_telegram_message, find_episode, get_telegram_response
 
 
 # Demande du chat_id
@@ -34,11 +32,8 @@ send_telegram_message("Entrez le numéro correspondant à votre choix : ", chat_
 time.sleep(20)
 
 # récupérer la réponse de l'utilisateur
-response = requests.get(f"https://api.telegram.org/bot{TOKEN_telegram}/getUpdates") 
-data = response.json()
-result = data["result"][-1]
-text = result["message"]["text"]
-type_choice = int(text)
+telegram_response = get_telegram_response(TOKEN_telegram)
+type_choice = int(telegram_response)
 
 # Demande du temps d'écoute souhaité
 send_telegram_message("Quel est le temps d'écoute que vous souhaitez ?\n1. Moins de 5 minutes\n2. De 5 à 15 minutes\n3. De 15 à 30 minutes\n4. De 30 à 45 minutes\n5. Plus de 45 minutes", chat_id, TOKEN_telegram)
@@ -47,11 +42,8 @@ send_telegram_message("Entrez le numéro correspondant à votre choix : ", chat_
 time.sleep(20)
 
 # récupérer la réponse de l'utilisateur
-response = requests.get(f"https://api.telegram.org/bot{TOKEN_telegram}/getUpdates") 
-data = response.json()
-result = data["result"][-1]
-text = result["message"]["text"]
-time_choice = int(text)
+telegram_response = get_telegram_response(TOKEN_telegram)
+time_choice = int(telegram_response)
 
 # Demande de mot clé à l'utilisateur
 send_telegram_message("Quel type de podcasts souhaitez-vous écouter ?\nEntrez le thème de votre choix : ", chat_id, TOKEN_telegram)
@@ -59,16 +51,13 @@ send_telegram_message("Quel type de podcasts souhaitez-vous écouter ?\nEntrez l
 time.sleep(20)
 
 # Récupérer la réponse de l'utilisateur
-response = requests.get(f"https://api.telegram.org/bot{TOKEN_telegram}/getUpdates") 
-data = response.json()
-result = data["result"][-1]
-text = result["message"]["text"]
-search_word = str(text)
+telegram_response = get_telegram_response(TOKEN_telegram)
+search_word = str(telegram_response)
 
 ############## PARTIE EPISODE ###################################
 if type_choice == 1:
     find_episode(search_word, time_choice)
-    
+
 ############### PARTIE SHOW #####################################
 if type_choice == 2:
     find_shows(search_word, time_choice)
