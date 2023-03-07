@@ -37,11 +37,11 @@ search_word = input("\n\n\nQuel type de podcasts souhaitez-vous écouter ?\nEntr
 
 ############## PARTIE EPISODE ###################################
 if type_choice == 1:
-    find_episode(search_word, time_choice)
+    find_episode(search_word, time_choice, chat_id, TOKEN_telegram)
 
 ############### PARTIE SHOW #####################################
 if type_choice == 2:
     find_shows(search_word, time_choice, chat_id, TOKEN_telegram)
 
-
-print('Vous pouvez aller sur votre compte Telegram pour découvrir le résultat de votre demande')
+# Fin de la conversation
+print('\nVous pouvez aller sur votre compte Telegram pour découvrir le résultat de votre demande')

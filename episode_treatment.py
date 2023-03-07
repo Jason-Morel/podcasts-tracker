@@ -51,7 +51,7 @@ def max_for_episode(time_choice):
 # trouve une liste d'épisodes selon le thème inscrit, dont la durée est comprise entre la durée minimale et la durée maximale et en français 
 # envoie les noms et liens des épisodes à l'utilisateur sur Telegram
    
-def find_episode(search_word, time_choice):    
+def find_episode(search_word, time_choice, chat_id, TOKEN_telegram):    
     min_duration = min_for_episode(time_choice)
     max_duration = max_for_episode(time_choice)
 
