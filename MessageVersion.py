@@ -16,7 +16,10 @@ import time
 from spotipy.oauth2 import SpotifyClientCredentials
 from spotipy.oauth2 import SpotifyOAuth
 from no_authentication import find_shows
-from fonctions import *
+from fonctions import send_telegram_message, range_for_episode, range_for_show, find_episode
+
+min_duration = 0
+max_duration = 1
 
 # Demande du chat_id
 chat_id = input('Démarrez une conversation avec "userinfobot" sur Telegram.\nEntrez votre ID ici :')
@@ -78,6 +81,5 @@ if type_choice == 2:
     find_shows(search_word, time_choice)
 
 ############## PARTIE EPISODE ###################################
-
 if type_choice == 1:
     find_episode(search_word, min_duration, max_duration)

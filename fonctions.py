@@ -20,8 +20,7 @@ def send_telegram_message(message):
     response = requests.get(url)
     
 
-min_duration = 0
-max_duration = 1
+
 time_choice = 1
 
 def range_for_episode(time):
@@ -58,6 +57,8 @@ def range_for_show(time):
     
 def find_episode(key, min_d, max_d):    
     global sp
+    min_duration = 0
+    max_duration = 1
     search_word = 0
     
     super_episode = sp.search(q=f'{search_word}', limit=50, type='episode', market='FR') # Implémentation du mot exact dans la fonction search
