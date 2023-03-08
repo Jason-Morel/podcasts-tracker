@@ -51,11 +51,11 @@ def max_for_episode(time_choice):
 # trouve une liste d'épisodes selon le thème inscrit, dont la durée est comprise entre la durée minimale et la durée maximale et en français 
 # envoie les noms et liens des épisodes à l'utilisateur sur Telegram
    
-def find_episode(search_word, time_choice, chat_id, TOKEN_telegram):    
+def find_episode(search_word, time_choice, chat_id, TOKEN_telegram):
     min_duration = min_for_episode(time_choice)
     max_duration = max_for_episode(time_choice)
 
-    super_episode = sp.search(q=search_word, limit=50, type='episode', market='FR') # Implémentation du mot dans la fonction search
+    super_episode = sp.search(q=search_word, limit=50, type='episode', market='FR')
     selected_episodes = [episode for episode in super_episode['episodes']['items'] if min_duration <= episode['duration_ms'] <= max_duration and episode['language'] == 'fr']
     offset = 50
     while len(selected_episodes) < 4 and offset < super_episode['episodes']['total']:
@@ -64,9 +64,13 @@ def find_episode(search_word, time_choice, chat_id, TOKEN_telegram):
         selected_episodes += [episode for episode in episodes if min_duration <= episode['duration_ms'] <= max_duration and episode['language'] == 'fr']
         offset += 50
     
-    messagefinal = "Voici une liste de plusieurs podcasts correspondant à votre recherche :\n\n"
-    for episode in selected_episodes[:3]:
-        messagefinal += f"{episode['name']}\n{episode['external_urls']['spotify']}\n\n"
+    if not selected_episodes:
+        messagefinal = "Oups ! Aucun podcast ne correspond à vos critères. Veuillez entrer un autre thème."
+    else:
+        messagefinal = "Voici une liste de plusieurs podcasts correspondant à votre recherche :\n\n"
+        for episode in selected_episodes[:3]:
+            messagefinal += f"{episode['name']}\n{episode['external_urls']['spotify']}\n\n"
+    
     send_telegram_message(messagefinal, chat_id, TOKEN_telegram)
     
     return messagefinal
