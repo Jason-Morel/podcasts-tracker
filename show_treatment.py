@@ -203,17 +203,17 @@ def return_shows(span, chat_id, TOKEN_telegram):
 
 
 
-def find_shows(input_key_words, input_duration, chat_id, TOKEN_telegram):
+def find_shows(input_key_words, time_choice, chat_id, TOKEN_telegram):
     #Algo input
     start_offset = 0
     sent = 0
 
     global sp
     global shows
-    global time_choice
 
     
     sp = authenticate()
+    input_duration = range_for_shows(time_choice)
 
 
     while sent < 5:

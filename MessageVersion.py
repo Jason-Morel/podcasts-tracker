@@ -51,8 +51,8 @@ chat_entry.pack()
 
 type_label = tk.Label(root, text="Que préférez-vous ?").pack(pady=10) # DEMANDE DE LA PRÉFÉRENCE ENTRE SHOW OU EPISODE
 type_var = tk.IntVar()
-type1_radio = tk.Radiobutton(root, text="Recevoir une liste de podcasts à écouter en une fois.", variable=type_var, value=1).pack(anchor='w')
-type2_radio = tk.Radiobutton(root, text="Recevoir une liste de show dont les longueurs des épisodes seront proches de votre temps d'écoute quotidien.", variable=type_var, value=2).pack(anchor='w')
+type1_radio = tk.Radiobutton(root, text="Recevoir une liste d'épisodes uniques", variable=type_var, value=1).pack(anchor='w')
+type2_radio = tk.Radiobutton(root, text="Recevoir une liste d'émissions (une émission contient plusieurs épisodes)", variable=type_var, value=2).pack(anchor='w')
 
 time_label = tk.Label(root, text="Quel est le temps d'écoute que vous souhaitez ?").pack(pady=10) # DEMANDE DU TEMPS D'ÉCOUTE
 time_var = tk.IntVar()
