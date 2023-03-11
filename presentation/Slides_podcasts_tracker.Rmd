@@ -36,17 +36,26 @@ knitr::opts_chunk$set(echo = FALSE)
 
 -   Documentation très dense sur l'API Telegram, manque de temps pour créer un bot de qualité\
     ---\> Envoi du résultat seulement sur Telegram
--   Création d'une interface graphique à l'aide du package Tkinter :
 
-![](images/Capture%20d%E2%80%99e%CC%81cran%202023-03-11%20a%CC%80%2010.10.40.png){width="332"}
+    ![](images/Capture%20d%E2%80%99e%CC%81cran%202023-03-11%20a%CC%80%2010.36.02.png){width="391"}
+
+    -   Fonction pour envoyer un message sur Telegram (TelegramMessages sur Github)
+
+## Interface graphique
+
+-   Création d'une interface graphique à l'aide du package Tkinter (MessageVersion sur Github) :
+
+![](images/Capture%20d%E2%80%99e%CC%81cran%202023-03-11%20a%CC%80%2010.10.40.png){width="356"}
 
 ## Traitement des émissions
 
--   Explication partie émission
+-   Show_treatment sur Github :
 
 ## Traitement des épisodes
 
-![](images/Capture%20d%E2%80%99e%CC%81cran%202023-03-11%20a%CC%80%2010.05.28-01.png){width="401"}
+-   Episode_treatment sur Github :
+
+![](images/Capture%20d%E2%80%99e%CC%81cran%202023-03-11%20a%CC%80%2010.29.03.png)
 
 ## Conclusion
 
