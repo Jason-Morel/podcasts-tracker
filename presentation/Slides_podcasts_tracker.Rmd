@@ -35,10 +35,10 @@ knitr::opts_chunk$set(echo = FALSE)
 ## Premier problème rencontré
 
 -   Documentation très dense sur l'API Telegram, manque de temps pour créer un bot de qualité\
-    ---\> Pas de réelle conversation sur Telegram comme on l'imaginait
--   Création d'une interface graphique à l'aide du package Tkinter
+    ---\> Envoi du résultat seulement sur Telegram
+-   Création d'une interface graphique à l'aide du package Tkinter :
 
-![](images/image-208995058.png){width="431"}
+![](images/Capture%20d%E2%80%99e%CC%81cran%202023-03-11%20a%CC%80%2010.10.40.png){width="332"}
 
 ## Traitement des émissions
 
@@ -46,7 +46,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Traitement des épisodes
 
--   Explication partie épisode
+![](images/Capture%20d%E2%80%99e%CC%81cran%202023-03-11%20a%CC%80%2010.05.28-01.png){width="401"}
 
 ## Conclusion
 
