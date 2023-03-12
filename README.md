@@ -18,7 +18,7 @@ If not, you can get started here: https://www.anaconda.com/products/distribution
     ![Download repo](/presentation/images/download_repo.png?raw=true "Download repo as .zip")
 
 2. You could unzip the downloaded file where you keep all your Github repositories.
-But that's completely up to you.
+But you can also store it somewhere else, it's up to you.
 
 3. Then open the file 'podcasts-tracker-main' and copy its path;
 
