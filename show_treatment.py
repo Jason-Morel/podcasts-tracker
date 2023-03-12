@@ -10,7 +10,7 @@ from spotipy.oauth2 import SpotifyClientCredentials
 import pandas as pd
 import re
 #from colorama import Fore, Back, Style
-from TelegramMessages import send_telegram_message
+from send_message import send_telegram_message
 
 
 
