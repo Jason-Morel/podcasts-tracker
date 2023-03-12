@@ -1,0 +1,238 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+  ignorenonframetext,
+]{beamer}
+\usepackage{pgfpages}
+\setbeamertemplate{caption}[numbered]
+\setbeamertemplate{caption label separator}{: }
+\setbeamercolor{caption name}{fg=normal text.fg}
+\beamertemplatenavigationsymbolsempty
+% Prevent slide breaks in the middle of a paragraph
+\widowpenalties 1 10000
+\raggedbottom
+\setbeamertemplate{part page}{
+  \centering
+  \begin{beamercolorbox}[sep=16pt,center]{part title}
+    \usebeamerfont{part title}\insertpart\par
+  \end{beamercolorbox}
+}
+\setbeamertemplate{section page}{
+  \centering
+  \begin{beamercolorbox}[sep=12pt,center]{part title}
+    \usebeamerfont{section title}\insertsection\par
+  \end{beamercolorbox}
+}
+\setbeamertemplate{subsection page}{
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center]{part title}
+    \usebeamerfont{subsection title}\insertsubsection\par
+  \end{beamercolorbox}
+}
+\AtBeginPart{
+  \frame{\partpage}
+}
+\AtBeginSection{
+  \ifbibliography
+  \else
+    \frame{\sectionpage}
+  \fi
+}
+\AtBeginSubsection{
+  \frame{\subsectionpage}
+}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\newif\ifbibliography
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\usepackage[normalem]{ulem}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={Présentation de l'outil Podcasts Tracker},
+  pdfauthor={Lyna BENYAHIA, Jason MOREL},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Présentation de l'outil Podcasts Tracker}
+\author{Lyna BENYAHIA, Jason MOREL}
+\date{2023-03-07}
+
+\begin{document}
+\frame{\titlepage}
+
+\begin{frame}{Introduction}
+\protect\hypertarget{introduction}{}
+\begin{itemize}
+\tightlist
+\item
+  Constat : il n'existe pas de moyens pour filtrer les résultats par
+  durée sur Spotify
+\item
+  Création d'un outil pour chercher des épisodes/émissions par durée
+\item
+  Démonstration de l'outil
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Mise en place du projet}
+\protect\hypertarget{mise-en-place-du-projet}{}
+\begin{enumerate}
+\item
+  Utilisation de Spotify pour notre projet à l'aide du package Python
+  Spotipy\\
+  \uline{Fonction principale que nous avons utilisé} :
+
+  \includegraphics[width=2.17708in,height=\textheight]{images/Capture d’écran 2023-03-07 à 21.37.31.png}
+
+  \uline{NB} : distinction entre émission et épisode, impossible de
+  faire des recherches par durée même depuis l'API
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{Mise en place du projet}
+\protect\hypertarget{mise-en-place-du-projet-1}{}
+\begin{enumerate}
+\setcounter{enumi}{1}
+\item
+  Création d'un Bot Telegram pour envoyer les liens directement sur le
+  téléphone de l'utilisateur
+
+  \includegraphics[width=2.625in,height=\textheight]{images/Capture d’écran 2023-03-07 à 21.48.48.png}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Récupération du Token afin de connecter le code Python au Bot
+    Telegram
+  \end{itemize}
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{Premier problème rencontré}
+\protect\hypertarget{premier-probluxe8me-rencontruxe9}{}
+\begin{itemize}
+\item
+  Documentation complexe sur l'API Telegram, manque de temps pour créer
+  un bot complètement automatisé\\
+  ---\textgreater{} Solution : inputs seront saisis depuis l'ordinateur
+  et seuls les résultats seront envoyés sur Telegram
+
+  \includegraphics[width=4.07292in,height=\textheight]{images/Capture d’écran 2023-03-11 à 10.36.02.png}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Fonction pour envoyer un message sur Telegram (TelegramMessages.py
+    sur Github)
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Interface graphique}
+\protect\hypertarget{interface-graphique}{}
+\begin{itemize}
+\tightlist
+\item
+  Création d'une interface graphique à l'aide du package Tkinter
+  (MessageVersion.py sur Github) :
+\end{itemize}
+
+\includegraphics[width=3.70833in,height=\textheight]{images/Capture d’écran 2023-03-11 à 10.10.40.png}
+\end{frame}
+
+\begin{frame}{Traitement des émissions}
+\protect\hypertarget{traitement-des-uxe9missions}{}
+\begin{itemize}
+\tightlist
+\item
+  Show\_treatment sur Github :
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Traitement des épisodes}
+\protect\hypertarget{traitement-des-uxe9pisodes}{}
+\begin{itemize}
+\tightlist
+\item
+  Episode\_treatment sur Github :
+\end{itemize}
+
+\includegraphics{images/Capture d’écran 2023-03-11 à 10.29.03.png}
+\end{frame}
+
+\begin{frame}{Conclusion}
+\protect\hypertarget{conclusion}{}
+\begin{itemize}
+\tightlist
+\item
+  Pratique que chacun travaille sur une partie différente du code
+\item
+  MAIS, cela complique l'assemblage des différentes parties
+\item
+  Extension possible :
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Bot Telegram complètement autonome
+  \item
+    Donner plus de résultats sur un même sujet
+  \item
+    Garder en mémoire chat\_id
+  \item
+    Créer .log des recherches et résultats de l'utilisateur
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+\end{document}

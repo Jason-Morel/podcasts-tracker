@@ -1,8 +1,11 @@
 ---
-title: "Presentation de l'outil Podcasts Tracker"
+title: "Présentation de l'outil Podcasts Tracker"
 author: "Lyna BENYAHIA, Jason MOREL"
 date: "2023-03-07"
-output: beamer_presentation
+output:
+  beamer_presentation: default
+  slidy_presentation: default
+  ioslides_presentation: default
 ---
 
 ```{r setup, include=FALSE}
@@ -11,9 +14,9 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Introduction
 
--   Constat : il n'existe pas de moyens pour filtrer les résultats par durée sur Spotify
--   Création d'un outil pour chercher des podcasts/émissions par durée
--   Démonstration de l'outil
+* Constat : il n'existe pas de moyens pour filtrer les résultats par durée sur Spotify
+* Création d'un outil pour chercher des épisodes/émissions par durée
+* Démonstration de l'outil
 
 ## Mise en place du projet
 
@@ -22,42 +25,47 @@ knitr::opts_chunk$set(echo = FALSE)
 
     ![](images/Capture%20d%E2%80%99e%CC%81cran%202023-03-07%20a%CC%80%2021.37.31.png){width="209"}
 
-    [NB]{.underline} : distinction entre émission et épisode, impossibilité de faire des recherches par durée même depuis l'API
+    [NB]{.underline} : distinction entre émission et épisode, impossible de faire des recherches par durée même depuis l'API
 
 ## Mise en place du projet
 
-2.  Création d'un Bot Telegram pour envoyer les résultats afin d'obtenir les liens directement sur son téléphone
+2.  Création d'un Bot Telegram pour envoyer les liens directement sur le téléphone de l'utilisateur
 
     ![](images/Capture%20d%E2%80%99e%CC%81cran%202023-03-07%20a%CC%80%2021.48.48.png){width="252"}
 
-    -   Récupération du Token afin de connecter son code Python à son Bot Telegram
+    * Récupération du Token afin de connecter le code Python au Bot Telegram
 
 ## Premier problème rencontré
 
--   Documentation très dense sur l'API Telegram, manque de temps pour créer un bot de qualité\
-    ---\> Envoi du résultat seulement sur Telegram
+* Documentation complexe sur l'API Telegram, manque de temps pour créer un bot complètement automatisé\
+    ---\> Solution : inputs seront saisis depuis l'ordinateur et seuls les résultats seront envoyés sur Telegram
 
     ![](images/Capture%20d%E2%80%99e%CC%81cran%202023-03-11%20a%CC%80%2010.36.02.png){width="391"}
 
-    -   Fonction pour envoyer un message sur Telegram (TelegramMessages sur Github)
+    * Fonction pour envoyer un message sur Telegram (TelegramMessages.py sur Github)
 
 ## Interface graphique
 
--   Création d'une interface graphique à l'aide du package Tkinter (MessageVersion sur Github) :
+* Création d'une interface graphique à l'aide du package Tkinter (MessageVersion.py sur Github) :
 
 ![](images/Capture%20d%E2%80%99e%CC%81cran%202023-03-11%20a%CC%80%2010.10.40.png){width="356"}
 
 ## Traitement des émissions
 
--   Show_treatment sur Github :
+* Show_treatment sur Github :
 
 ## Traitement des épisodes
 
--   Episode_treatment sur Github :
+* Episode_treatment sur Github :
 
 ![](images/Capture%20d%E2%80%99e%CC%81cran%202023-03-11%20a%CC%80%2010.29.03.png)
 
 ## Conclusion
 
--   Difficultés qui émergent quand chacun travaille de son côté
--   Extension possible : Bot Telegram complet
+* Pratique que chacun travaille sur une partie différente du code
+* MAIS, cela complique l'assemblage des différentes parties
+* Extension possible : 
+  + Bot Telegram complètement autonome
+  + Donner plus de résultats sur un même sujet 
+  + Garder en mémoire chat_id
+  + Créer .log des recherches et résultats de l'utilisateur
