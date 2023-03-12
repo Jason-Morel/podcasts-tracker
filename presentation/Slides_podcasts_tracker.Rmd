@@ -52,7 +52,13 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Traitement des émissions
 
--   Show_treatment sur Github :
+-   Voir fichier Show_treatment sur Github
+-   Pas de variable indiquant la durée des émissions : il faut l'approximer !
+-   A partir des 50 premiers épisodes de l'émission
+-   Estimer bornes mini et maxi pour durée de chaque émission
+-   Eliminer les intervalles trop importants
+-   Uniformiser les intervalles restants
+-   Eviter les bugs
 
 ## Traitement des épisodes
 
