@@ -13,20 +13,24 @@ Results will be sent through Telegram so that users can open links from their ph
 We'll consider that Python is allready installed on your computer. 
 If not, you can get started here: https://www.anaconda.com/products/distribution.
 
-1. Fork our repo OR download it as a .zip folder;
+
+1. Open your Telegram account and start a conversation with @Podcast_tracker_bot. This is the Telegram bot that will send you the list of podcasts to listen to, and the conversation must be started for it to have permission to send you messages.
+
+
+2. Fork our repo OR download it as a .zip folder;
 
     ![Download repo](/presentation/images/download_repo.png?raw=true "Download repo as .zip")
 
-2. You could unzip the downloaded file where you keep all your Github repositories.
+3. You could unzip the downloaded file where you keep all your Github repositories.
 But you can also store it somewhere else, it's up to you.
 
-3. Then open the file 'podcasts-tracker-main' and copy its path;
+4. Then open the file 'podcasts-tracker-main' and copy its path;
 
     ![Copy path](/presentation/images/copy_address.png?raw=true "Copy path")
     
-4. Now, open your command prompt;
+5. Now, open your command prompt;
 
-5. Copy, paste and run the following lines to install 'spotipy' and 'request' packages:
+6. Copy, paste and run the following lines to install 'spotipy' and 'request' packages:
     + For Windows users:
         ```bash
         py -m pip install spotipy
@@ -38,11 +42,11 @@ But you can also store it somewhere else, it's up to you.
         pip install request
         ```
 
-6. Stay in your command prompt and:
+7. Stay in your command prompt and:
     + type 'cd ' and paste the path of the folder 'podcast-tracker-main'. Then press return to run;
     + type 'python podcast_finder.py' and press return.
     
-7. You should see this window now:
+8. You should see this window now:
     
     ![User interface](/presentation/images/user_interface.png?raw=true "User interface")
 
