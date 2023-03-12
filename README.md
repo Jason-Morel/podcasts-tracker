@@ -50,7 +50,7 @@ NB: If you receive several times the following message:
 
 "Voici une liste de plusieurs émissions correspondant à votre recherche :"
 
-it means there aren't many results for the duration and keywords you entered.
+It means there aren't many results for the duration and keywords you entered.
 You might want to change your inputs to get other results.
 
 ## How the project is built
