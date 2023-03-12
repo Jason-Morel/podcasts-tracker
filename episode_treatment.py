@@ -7,7 +7,7 @@ Created on Mon Mar  6 18:58:42 2023
 """
 import spotipy 
 from spotipy.oauth2 import SpotifyClientCredentials
-from TelegramMessages import send_telegram_message
+from send_message import send_telegram_message
 
 # Authentification spotify
 sp = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials(client_id='e48f42372a074a25b7a0d25da48439d6',

@@ -1,2 +1,0 @@
-URI = Uniform Resource Identifier
-API = Application Programming Interface
