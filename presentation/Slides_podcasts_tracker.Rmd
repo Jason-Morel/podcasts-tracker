@@ -3,8 +3,8 @@ title: "Présentation de l'outil Podcasts Tracker"
 author: "Lyna BENYAHIA, Jason MOREL"
 date: "2023-03-07"
 output:
-  beamer_presentation: default
   slidy_presentation: default
+  beamer_presentation: default
   ioslides_presentation: default
 ---
 
@@ -42,11 +42,11 @@ knitr::opts_chunk$set(echo = FALSE)
 
     ![](images/Capture%20d%E2%80%99e%CC%81cran%202023-03-11%20a%CC%80%2010.36.02.png){width="391"}
 
-    -   Fonction pour envoyer un message sur Telegram (TelegramMessages.py sur Github)
+    -   Fonction pour envoyer un message sur Telegram (send_message.py sur Github)
 
 ## Interface graphique
 
--   Création d'une interface graphique à l'aide du package Tkinter (MessageVersion.py sur Github) :
+-   Création d'une interface graphique à l'aide du package Tkinter (podcast_finder.py sur Github) :
 
 ![](images/Capture%20d%E2%80%99e%CC%81cran%202023-03-11%20a%CC%80%2010.10.40.png){width="356"}
 
