@@ -46,8 +46,10 @@ But you can also store it somewhere else, it's up to you.
     
     ![User interface](/presentation/images/user_interface.png?raw=true "User interface")
 
-NB: If you receive several times the following message: 
-"Voici une liste de plusieurs émissions correspondant à votre recherche :",
+NB: If you receive several times the following message:
+
+"Voici une liste de plusieurs émissions correspondant à votre recherche :"
+
 it means there aren't many results for the duration and keywords you entered.
 You might want to change your inputs to get other results.
 
