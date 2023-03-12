@@ -3,9 +3,9 @@ title: "Présentation de l'outil Podcasts Tracker"
 author: "Lyna BENYAHIA, Jason MOREL"
 date: "2023-03-07"
 output:
-  slidy_presentation: default
   beamer_presentation: default
   ioslides_presentation: default
+  slidy_presentation: default
 ---
 
 ```{r setup, include=FALSE}
