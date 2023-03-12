@@ -10,11 +10,13 @@ Results will be sent through Telegram so that user can open links from their pho
 
 ##How to use our tool
 1. Fork our repo OR download it as a .zip folder;
+
     ![Download repo](/presentation/images/download_repo.png?raw=true "Download repo as .zip")
 
 2. You could unzip the downloaded file where you keep all your Github repositories;
 
 3. Then open the file 'podcasts-tracker-main' and copy its path;
+
     ![Copy path](/presentation/images/copy_address.png?raw=true "Copy path")
     
 4. Now, open your command prompt;
@@ -36,5 +38,6 @@ Results will be sent through Telegram so that user can open links from their pho
     + type 'python MessageVersion.py' and press return.
     
 7. You should see this window now:
+    
     ![User interface](/presentation/images/user_interface.png?raw=true "User interface")
 
