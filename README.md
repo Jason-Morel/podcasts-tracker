@@ -10,7 +10,7 @@ Results will be sent through Telegram so that user can open links from their pho
 
 ##How to use our tool
 1. Fork our repo OR download it as a .zip folder;
-    ![Download repo](/podcasts-tracker/presentation/images/download_repo.png?raw=true "Download repo as .zip")
+    ![Download repo](/presentation/images/download_repo.png?raw=true "Download repo as .zip")
 2. algo sends back a list of podcasts suggestions matching the criteria.
 
 
