@@ -6,14 +6,19 @@ You have found the repo where Lyna Benyahia and Jason Morel will work on their p
 
 We noticed that it is not possible to sort podcasts by duration on the Spotify app.
 Therefore, the idea is to build a tool which will help finding podcasts depending on their theme AND duration. 
-Results will be sent through Telegram so that user can open links from their phone.
+Results will be sent through Telegram so that users can open links from their phone.
 
 ## How to use our tool
+
+We'll consider that Python is allready installed on your computer. 
+If not, you can get started here: https://www.anaconda.com/products/distribution.
+
 1. Fork our repo OR download it as a .zip folder;
 
     ![Download repo](/presentation/images/download_repo.png?raw=true "Download repo as .zip")
 
-2. You could unzip the downloaded file where you keep all your Github repositories;
+2. You could unzip the downloaded file where you keep all your Github repositories.
+But that's completely up to you.
 
 3. Then open the file 'podcasts-tracker-main' and copy its path;
 
