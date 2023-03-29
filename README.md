@@ -14,8 +14,8 @@ We'll consider that Python is allready installed on your computer.
 If not, you can get started here: https://www.anaconda.com/products/distribution.
 
 
-1. Open your Telegram account and start a conversation with @Podcast_tracker_bot. This is the Telegram bot that will send you the list of podcasts to listen to, and the conversation must be started for it to have permission to send you messages.
-
+1. Open your Telegram account and start a conversation with @Podcast_tracker_bot.
+The list of results will be sent from this bot.
 
 2. Fork our repo OR download it as a .zip folder;
 
